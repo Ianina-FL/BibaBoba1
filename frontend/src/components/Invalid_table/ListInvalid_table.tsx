@@ -11,7 +11,7 @@ import LoadingSpinner from '../LoadingSpinner';
 import { hasPermission } from '../../helpers/userPermissions';
 
 type Props = {
-  dishes_ordered: any[];
+  invalid_table: any[];
   loading: boolean;
   onDelete: (id: string) => void;
   onView: (id: string) => void;
@@ -21,8 +21,8 @@ type Props = {
   onPageChange: (page: number) => void;
 };
 
-const ListDishes_ordered = ({
-  dishes_ordered,
+const ListInvalid_table = ({
+  invalid_table,
   loading,
   onEdit,
   onView,
@@ -34,7 +34,7 @@ const ListDishes_ordered = ({
   const currentUser = useAppSelector((state) => state.auth.currentUser);
   const hasUpdatePermission = hasPermission(
     currentUser,
-    'UPDATE_DISHES_ORDERED',
+    'UPDATE_INVALID_TABLE',
   );
 
   const corners = useAppSelector((state) => state.style.corners);
@@ -45,7 +45,7 @@ const ListDishes_ordered = ({
       <div className='relative overflow-x-auto p-4 space-y-4'>
         {loading && <LoadingSpinner />}
         {!loading &&
-          dishes_ordered.map((item) => (
+          invalid_table.map((item) => (
             <CardBox
               hasTable
               isList
@@ -62,39 +62,20 @@ const ListDishes_ordered = ({
                     'flex-1 px-4 py-6 h-24 flex items-stretch divide-x-2  divide-gray-600   items-center overflow-hidden`}> dark:divide-dark-700 overflow-x-auto'
                   }
                   onClick={() => onView(item.id)}
-                >
-                  <div className={'flex-1 px-3'}>
-                    <p className={'text-xs   text-gray-500 '}>Order</p>
-                    <p className={'line-clamp-2'}>
-                      {dataFormatter.ordersOneListFormatter(item.order)}
-                    </p>
-                  </div>
-
-                  <div className={'flex-1 px-3'}>
-                    <p className={'text-xs   text-gray-500 '}>Dish</p>
-                    <p className={'line-clamp-2'}>
-                      {dataFormatter.dishesOneListFormatter(item.dish)}
-                    </p>
-                  </div>
-
-                  <div className={'flex-1 px-3'}>
-                    <p className={'text-xs   text-gray-500 '}>Quantity</p>
-                    <p className={'line-clamp-2'}>{item.quantity}</p>
-                  </div>
-                </div>
+                ></div>
                 <ListActionsPopover
                   onDelete={onDelete}
                   onView={onView}
                   onEdit={onEdit}
                   itemId={item.id}
-                  pathEdit={`/dishes_ordered/dishes_ordered-edit/?id=${item.id}`}
-                  pathView={`/dishes_ordered/dishes_ordered-view/?id=${item.id}`}
+                  pathEdit={`/invalid_table/invalid_table-edit/?id=${item.id}`}
+                  pathView={`/invalid_table/invalid_table-view/?id=${item.id}`}
                   hasUpdatePermission={hasUpdatePermission}
                 />
               </div>
             </CardBox>
           ))}
-        {!loading && dishes_ordered.length === 0 && (
+        {!loading && invalid_table.length === 0 && (
           <div className='col-span-full flex items-center justify-center h-40'>
             <p className=''>No data to display</p>
           </div>
@@ -111,4 +92,4 @@ const ListDishes_ordered = ({
   );
 };
 
-export default ListDishes_ordered;
+export default ListInvalid_table;

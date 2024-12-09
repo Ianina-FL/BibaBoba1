@@ -5,17 +5,13 @@ const bcrypt = require('bcrypt');
 const moment = require('moment');
 
 module.exports = function (sequelize, DataTypes) {
-  const dish_ingredients = sequelize.define(
-    'dish_ingredients',
+  const invalid_table = sequelize.define(
+    'invalid_table',
     {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-      },
-
-      quantity: {
-        type: DataTypes.INTEGER,
       },
 
       importHash: {
@@ -31,35 +27,19 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  dish_ingredients.associate = (db) => {
+  invalid_table.associate = (db) => {
     /// loop through entities and it's fields, and if ref === current e[name] and create relation has many on parent entity
 
     //end loop
 
-    db.dish_ingredients.belongsTo(db.dishes, {
-      as: 'dish',
-      foreignKey: {
-        name: 'dishId',
-      },
-      constraints: false,
-    });
-
-    db.dish_ingredients.belongsTo(db.ingredients, {
-      as: 'ingredient',
-      foreignKey: {
-        name: 'ingredientId',
-      },
-      constraints: false,
-    });
-
-    db.dish_ingredients.belongsTo(db.users, {
+    db.invalid_table.belongsTo(db.users, {
       as: 'createdBy',
     });
 
-    db.dish_ingredients.belongsTo(db.users, {
+    db.invalid_table.belongsTo(db.users, {
       as: 'updatedBy',
     });
   };
 
-  return dish_ingredients;
+  return invalid_table;
 };

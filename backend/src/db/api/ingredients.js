@@ -129,18 +129,8 @@ module.exports = class IngredientsDBApi {
 
     const output = ingredients.get({ plain: true });
 
-    output.dish_ingredients_ingredient_1 =
-      await ingredients.getDish_ingredients_ingredient_1({
-        transaction,
-      });
-
-    output.dish_ingredients_ingredient_2 =
-      await ingredients.getDish_ingredients_ingredient_2({
-        transaction,
-      });
-
-    output.dish_ingredients_ingredient_3 =
-      await ingredients.getDish_ingredients_ingredient_3({
+    output.dish_ingredients_ingredient =
+      await ingredients.getDish_ingredients_ingredient({
         transaction,
       });
 

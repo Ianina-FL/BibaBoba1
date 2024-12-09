@@ -41,8 +41,28 @@ export const loadColumns = async (
 
   return [
     {
-      field: 'ingredient_1',
-      headerName: 'Ingredient 1',
+      field: 'dish',
+      headerName: 'Dish',
+      flex: 1,
+      minWidth: 120,
+      filterable: false,
+      headerClassName: 'datagrid--header',
+      cellClassName: 'datagrid--cell',
+
+      editable: hasUpdatePermission,
+
+      sortable: false,
+      type: 'singleSelect',
+      getOptionValue: (value: any) => value?.id,
+      getOptionLabel: (value: any) => value?.label,
+      valueOptions: await callOptionsApi('dishes'),
+      valueGetter: (params: GridValueGetterParams) =>
+        params?.value?.id ?? params?.value,
+    },
+
+    {
+      field: 'ingredient',
+      headerName: 'Ingredient',
       flex: 1,
       minWidth: 120,
       filterable: false,
@@ -72,65 +92,6 @@ export const loadColumns = async (
       editable: hasUpdatePermission,
 
       type: 'number',
-    },
-
-    {
-      field: 'ingredient_2',
-      headerName: 'Ingredient 2',
-      flex: 1,
-      minWidth: 120,
-      filterable: false,
-      headerClassName: 'datagrid--header',
-      cellClassName: 'datagrid--cell',
-
-      editable: hasUpdatePermission,
-
-      sortable: false,
-      type: 'singleSelect',
-      getOptionValue: (value: any) => value?.id,
-      getOptionLabel: (value: any) => value?.label,
-      valueOptions: await callOptionsApi('ingredients'),
-      valueGetter: (params: GridValueGetterParams) =>
-        params?.value?.id ?? params?.value,
-    },
-
-    {
-      field: 'ingredient_3',
-      headerName: 'Ingredient 3',
-      flex: 1,
-      minWidth: 120,
-      filterable: false,
-      headerClassName: 'datagrid--header',
-      cellClassName: 'datagrid--cell',
-
-      editable: hasUpdatePermission,
-
-      sortable: false,
-      type: 'singleSelect',
-      getOptionValue: (value: any) => value?.id,
-      getOptionLabel: (value: any) => value?.label,
-      valueOptions: await callOptionsApi('ingredients'),
-      valueGetter: (params: GridValueGetterParams) =>
-        params?.value?.id ?? params?.value,
-    },
-
-    {
-      field: 'dish',
-      headerName: 'Dish',
-      flex: 1,
-      minWidth: 120,
-      filterable: false,
-      headerClassName: 'datagrid--header',
-      cellClassName: 'datagrid--cell',
-
-      editable: false,
-      sortable: false,
-      type: 'singleSelect',
-      valueFormatter: ({ value }) =>
-        dataFormatter.ingredientsManyListFormatter(value).join(', '),
-      renderEditCell: (params) => (
-        <DataGridMultiSelect {...params} entityName={'ingredients'} />
-      ),
     },
 
     {

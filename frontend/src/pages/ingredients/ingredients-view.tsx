@@ -58,7 +58,7 @@ const IngredientsView = () => {
 
           <>
             <p className={'block font-bold mb-2'}>
-              Dish_ingredients Ingredient 1
+              Dish_ingredients Ingredient
             </p>
             <CardBox
               className='mb-6 border border-gray-300 rounded overflow-hidden'
@@ -72,11 +72,9 @@ const IngredientsView = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {ingredients.dish_ingredients_ingredient_1 &&
-                      Array.isArray(
-                        ingredients.dish_ingredients_ingredient_1,
-                      ) &&
-                      ingredients.dish_ingredients_ingredient_1.map(
+                    {ingredients.dish_ingredients_ingredient &&
+                      Array.isArray(ingredients.dish_ingredients_ingredient) &&
+                      ingredients.dish_ingredients_ingredient.map(
                         (item: any) => (
                           <tr
                             key={item.id}
@@ -93,93 +91,7 @@ const IngredientsView = () => {
                   </tbody>
                 </table>
               </div>
-              {!ingredients?.dish_ingredients_ingredient_1?.length && (
-                <div className={'text-center py-4'}>No data</div>
-              )}
-            </CardBox>
-          </>
-
-          <>
-            <p className={'block font-bold mb-2'}>
-              Dish_ingredients Ingredient 2
-            </p>
-            <CardBox
-              className='mb-6 border border-gray-300 rounded overflow-hidden'
-              hasTable
-            >
-              <div className='overflow-x-auto'>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Quantity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {ingredients.dish_ingredients_ingredient_2 &&
-                      Array.isArray(
-                        ingredients.dish_ingredients_ingredient_2,
-                      ) &&
-                      ingredients.dish_ingredients_ingredient_2.map(
-                        (item: any) => (
-                          <tr
-                            key={item.id}
-                            onClick={() =>
-                              router.push(
-                                `/dish_ingredients/dish_ingredients-view/?id=${item.id}`,
-                              )
-                            }
-                          >
-                            <td data-label='quantity'>{item.quantity}</td>
-                          </tr>
-                        ),
-                      )}
-                  </tbody>
-                </table>
-              </div>
-              {!ingredients?.dish_ingredients_ingredient_2?.length && (
-                <div className={'text-center py-4'}>No data</div>
-              )}
-            </CardBox>
-          </>
-
-          <>
-            <p className={'block font-bold mb-2'}>
-              Dish_ingredients Ingredient 3
-            </p>
-            <CardBox
-              className='mb-6 border border-gray-300 rounded overflow-hidden'
-              hasTable
-            >
-              <div className='overflow-x-auto'>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Quantity</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {ingredients.dish_ingredients_ingredient_3 &&
-                      Array.isArray(
-                        ingredients.dish_ingredients_ingredient_3,
-                      ) &&
-                      ingredients.dish_ingredients_ingredient_3.map(
-                        (item: any) => (
-                          <tr
-                            key={item.id}
-                            onClick={() =>
-                              router.push(
-                                `/dish_ingredients/dish_ingredients-view/?id=${item.id}`,
-                              )
-                            }
-                          >
-                            <td data-label='quantity'>{item.quantity}</td>
-                          </tr>
-                        ),
-                      )}
-                  </tbody>
-                </table>
-              </div>
-              {!ingredients?.dish_ingredients_ingredient_3?.length && (
+              {!ingredients?.dish_ingredients_ingredient?.length && (
                 <div className={'text-center py-4'}>No data</div>
               )}
             </CardBox>

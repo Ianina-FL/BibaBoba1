@@ -9,13 +9,15 @@ const DishIngredients = db.dish_ingredients;
 
 const Dishes = db.dishes;
 
-const DishesOrdered = db.dishes_ordered;
+const DishesOrder = db.dishes_order;
 
 const Ingredients = db.ingredients;
 
 const Orders = db.orders;
 
 const Sources = db.sources;
+
+const InvalidTable = db.invalid_table;
 
 const ClientAddressesData = [
   {
@@ -53,18 +55,6 @@ const ClientAddressesData = [
 
     flat_number: '3C',
   },
-
-  {
-    // type code here for "relation_one" field
-
-    street: 'Wall St',
-
-    house_number: '101',
-
-    code: '10004',
-
-    flat_number: '4D',
-  },
 ];
 
 const ClientsData = [
@@ -85,61 +75,31 @@ const ClientsData = [
 
     phone: '5557654321',
   },
-
-  {
-    name: 'Michael Brown',
-
-    phone: '5552345678',
-  },
 ];
 
 const DishIngredientsData = [
   {
     // type code here for "relation_one" field
 
+    // type code here for "relation_one" field
+
     quantity: 2,
-
-    // type code here for "relation_one" field
-
-    // type code here for "relation_one" field
-
-    // type code here for "relation_many" field
   },
 
   {
+    // type code here for "relation_one" field
+
     // type code here for "relation_one" field
 
     quantity: 1,
-
-    // type code here for "relation_one" field
-
-    // type code here for "relation_one" field
-
-    // type code here for "relation_many" field
   },
 
   {
+    // type code here for "relation_one" field
+
     // type code here for "relation_one" field
 
     quantity: 1,
-
-    // type code here for "relation_one" field
-
-    // type code here for "relation_one" field
-
-    // type code here for "relation_many" field
-  },
-
-  {
-    // type code here for "relation_one" field
-
-    quantity: 3,
-
-    // type code here for "relation_one" field
-
-    // type code here for "relation_one" field
-
-    // type code here for "relation_many" field
   },
 ];
 
@@ -163,27 +123,19 @@ const DishesData = [
   {
     name: 'Porridge',
 
-    cutlery: true,
+    cutlery: false,
 
     price: 4.99,
   },
-
-  {
-    name: 'English Breakfast',
-
-    cutlery: true,
-
-    price: 9.99,
-  },
 ];
 
-const DishesOrderedData = [
+const DishesOrderData = [
   {
     // type code here for "relation_one" field
 
     // type code here for "relation_one" field
 
-    quantity: 2,
+    quantity: 6,
   },
 
   {
@@ -191,7 +143,7 @@ const DishesOrderedData = [
 
     // type code here for "relation_one" field
 
-    quantity: 1,
+    quantity: 7,
   },
 
   {
@@ -199,15 +151,7 @@ const DishesOrderedData = [
 
     // type code here for "relation_one" field
 
-    quantity: 3,
-  },
-
-  {
-    // type code here for "relation_one" field
-
-    // type code here for "relation_one" field
-
-    quantity: 1,
+    quantity: 7,
   },
 ];
 
@@ -222,10 +166,6 @@ const IngredientsData = [
 
   {
     name: 'Milk',
-  },
-
-  {
-    name: 'Bacon',
   },
 ];
 
@@ -243,7 +183,7 @@ const OrdersData = [
 
     order_rejected: new Date(),
 
-    repeated: true,
+    repeated: false,
   },
 
   {
@@ -277,22 +217,6 @@ const OrdersData = [
 
     repeated: false,
   },
-
-  {
-    // type code here for "relation_one" field
-
-    // type code here for "relation_one" field
-
-    order_received: new Date('2023-10-04T17:00:00Z'),
-
-    order_ready: new Date('2023-10-04T18:00:00Z'),
-
-    order_delivered: new Date('2023-10-04T19:00:00Z'),
-
-    order_rejected: new Date(),
-
-    repeated: true,
-  },
 ];
 
 const SourcesData = [
@@ -307,11 +231,9 @@ const SourcesData = [
   {
     source_name: 'App',
   },
-
-  {
-    source_name: 'Walk-in',
-  },
 ];
+
+const InvalidTableData = [{}, {}, {}];
 
 // Similar logic for "relation_many"
 
@@ -348,248 +270,145 @@ async function associateClientAddressWithClient() {
   if (ClientAddress2?.setClient) {
     await ClientAddress2.setClient(relatedClient2);
   }
-
-  const relatedClient3 = await Clients.findOne({
-    offset: Math.floor(Math.random() * (await Clients.count())),
-  });
-  const ClientAddress3 = await ClientAddresses.findOne({
-    order: [['id', 'ASC']],
-    offset: 3,
-  });
-  if (ClientAddress3?.setClient) {
-    await ClientAddress3.setClient(relatedClient3);
-  }
 }
 
-async function associateDishIngredientWithIngredient_1() {
-  const relatedIngredient_10 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient0 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 0,
-  });
-  if (DishIngredient0?.setIngredient_1) {
-    await DishIngredient0.setIngredient_1(relatedIngredient_10);
-  }
-
-  const relatedIngredient_11 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient1 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 1,
-  });
-  if (DishIngredient1?.setIngredient_1) {
-    await DishIngredient1.setIngredient_1(relatedIngredient_11);
-  }
-
-  const relatedIngredient_12 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient2 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 2,
-  });
-  if (DishIngredient2?.setIngredient_1) {
-    await DishIngredient2.setIngredient_1(relatedIngredient_12);
-  }
-
-  const relatedIngredient_13 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient3 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 3,
-  });
-  if (DishIngredient3?.setIngredient_1) {
-    await DishIngredient3.setIngredient_1(relatedIngredient_13);
-  }
-}
-
-async function associateDishIngredientWithIngredient_2() {
-  const relatedIngredient_20 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient0 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 0,
-  });
-  if (DishIngredient0?.setIngredient_2) {
-    await DishIngredient0.setIngredient_2(relatedIngredient_20);
-  }
-
-  const relatedIngredient_21 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient1 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 1,
-  });
-  if (DishIngredient1?.setIngredient_2) {
-    await DishIngredient1.setIngredient_2(relatedIngredient_21);
-  }
-
-  const relatedIngredient_22 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient2 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 2,
-  });
-  if (DishIngredient2?.setIngredient_2) {
-    await DishIngredient2.setIngredient_2(relatedIngredient_22);
-  }
-
-  const relatedIngredient_23 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient3 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 3,
-  });
-  if (DishIngredient3?.setIngredient_2) {
-    await DishIngredient3.setIngredient_2(relatedIngredient_23);
-  }
-}
-
-async function associateDishIngredientWithIngredient_3() {
-  const relatedIngredient_30 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient0 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 0,
-  });
-  if (DishIngredient0?.setIngredient_3) {
-    await DishIngredient0.setIngredient_3(relatedIngredient_30);
-  }
-
-  const relatedIngredient_31 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient1 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 1,
-  });
-  if (DishIngredient1?.setIngredient_3) {
-    await DishIngredient1.setIngredient_3(relatedIngredient_31);
-  }
-
-  const relatedIngredient_32 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient2 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 2,
-  });
-  if (DishIngredient2?.setIngredient_3) {
-    await DishIngredient2.setIngredient_3(relatedIngredient_32);
-  }
-
-  const relatedIngredient_33 = await Ingredients.findOne({
-    offset: Math.floor(Math.random() * (await Ingredients.count())),
-  });
-  const DishIngredient3 = await DishIngredients.findOne({
-    order: [['id', 'ASC']],
-    offset: 3,
-  });
-  if (DishIngredient3?.setIngredient_3) {
-    await DishIngredient3.setIngredient_3(relatedIngredient_33);
-  }
-}
-
-// Similar logic for "relation_many"
-
-async function associateDishesOrderedWithOrder() {
-  const relatedOrder0 = await Orders.findOne({
-    offset: Math.floor(Math.random() * (await Orders.count())),
-  });
-  const DishesOrdered0 = await DishesOrdered.findOne({
-    order: [['id', 'ASC']],
-    offset: 0,
-  });
-  if (DishesOrdered0?.setOrder) {
-    await DishesOrdered0.setOrder(relatedOrder0);
-  }
-
-  const relatedOrder1 = await Orders.findOne({
-    offset: Math.floor(Math.random() * (await Orders.count())),
-  });
-  const DishesOrdered1 = await DishesOrdered.findOne({
-    order: [['id', 'ASC']],
-    offset: 1,
-  });
-  if (DishesOrdered1?.setOrder) {
-    await DishesOrdered1.setOrder(relatedOrder1);
-  }
-
-  const relatedOrder2 = await Orders.findOne({
-    offset: Math.floor(Math.random() * (await Orders.count())),
-  });
-  const DishesOrdered2 = await DishesOrdered.findOne({
-    order: [['id', 'ASC']],
-    offset: 2,
-  });
-  if (DishesOrdered2?.setOrder) {
-    await DishesOrdered2.setOrder(relatedOrder2);
-  }
-
-  const relatedOrder3 = await Orders.findOne({
-    offset: Math.floor(Math.random() * (await Orders.count())),
-  });
-  const DishesOrdered3 = await DishesOrdered.findOne({
-    order: [['id', 'ASC']],
-    offset: 3,
-  });
-  if (DishesOrdered3?.setOrder) {
-    await DishesOrdered3.setOrder(relatedOrder3);
-  }
-}
-
-async function associateDishesOrderedWithDish() {
+async function associateDishIngredientWithDish() {
   const relatedDish0 = await Dishes.findOne({
     offset: Math.floor(Math.random() * (await Dishes.count())),
   });
-  const DishesOrdered0 = await DishesOrdered.findOne({
+  const DishIngredient0 = await DishIngredients.findOne({
     order: [['id', 'ASC']],
     offset: 0,
   });
-  if (DishesOrdered0?.setDish) {
-    await DishesOrdered0.setDish(relatedDish0);
+  if (DishIngredient0?.setDish) {
+    await DishIngredient0.setDish(relatedDish0);
   }
 
   const relatedDish1 = await Dishes.findOne({
     offset: Math.floor(Math.random() * (await Dishes.count())),
   });
-  const DishesOrdered1 = await DishesOrdered.findOne({
+  const DishIngredient1 = await DishIngredients.findOne({
     order: [['id', 'ASC']],
     offset: 1,
   });
-  if (DishesOrdered1?.setDish) {
-    await DishesOrdered1.setDish(relatedDish1);
+  if (DishIngredient1?.setDish) {
+    await DishIngredient1.setDish(relatedDish1);
   }
 
   const relatedDish2 = await Dishes.findOne({
     offset: Math.floor(Math.random() * (await Dishes.count())),
   });
-  const DishesOrdered2 = await DishesOrdered.findOne({
+  const DishIngredient2 = await DishIngredients.findOne({
     order: [['id', 'ASC']],
     offset: 2,
   });
-  if (DishesOrdered2?.setDish) {
-    await DishesOrdered2.setDish(relatedDish2);
+  if (DishIngredient2?.setDish) {
+    await DishIngredient2.setDish(relatedDish2);
+  }
+}
+
+async function associateDishIngredientWithIngredient() {
+  const relatedIngredient0 = await Ingredients.findOne({
+    offset: Math.floor(Math.random() * (await Ingredients.count())),
+  });
+  const DishIngredient0 = await DishIngredients.findOne({
+    order: [['id', 'ASC']],
+    offset: 0,
+  });
+  if (DishIngredient0?.setIngredient) {
+    await DishIngredient0.setIngredient(relatedIngredient0);
   }
 
-  const relatedDish3 = await Dishes.findOne({
+  const relatedIngredient1 = await Ingredients.findOne({
+    offset: Math.floor(Math.random() * (await Ingredients.count())),
+  });
+  const DishIngredient1 = await DishIngredients.findOne({
+    order: [['id', 'ASC']],
+    offset: 1,
+  });
+  if (DishIngredient1?.setIngredient) {
+    await DishIngredient1.setIngredient(relatedIngredient1);
+  }
+
+  const relatedIngredient2 = await Ingredients.findOne({
+    offset: Math.floor(Math.random() * (await Ingredients.count())),
+  });
+  const DishIngredient2 = await DishIngredients.findOne({
+    order: [['id', 'ASC']],
+    offset: 2,
+  });
+  if (DishIngredient2?.setIngredient) {
+    await DishIngredient2.setIngredient(relatedIngredient2);
+  }
+}
+
+async function associateDishesOrderWithOrder() {
+  const relatedOrder0 = await Orders.findOne({
+    offset: Math.floor(Math.random() * (await Orders.count())),
+  });
+  const DishesOrder0 = await DishesOrder.findOne({
+    order: [['id', 'ASC']],
+    offset: 0,
+  });
+  if (DishesOrder0?.setOrder) {
+    await DishesOrder0.setOrder(relatedOrder0);
+  }
+
+  const relatedOrder1 = await Orders.findOne({
+    offset: Math.floor(Math.random() * (await Orders.count())),
+  });
+  const DishesOrder1 = await DishesOrder.findOne({
+    order: [['id', 'ASC']],
+    offset: 1,
+  });
+  if (DishesOrder1?.setOrder) {
+    await DishesOrder1.setOrder(relatedOrder1);
+  }
+
+  const relatedOrder2 = await Orders.findOne({
+    offset: Math.floor(Math.random() * (await Orders.count())),
+  });
+  const DishesOrder2 = await DishesOrder.findOne({
+    order: [['id', 'ASC']],
+    offset: 2,
+  });
+  if (DishesOrder2?.setOrder) {
+    await DishesOrder2.setOrder(relatedOrder2);
+  }
+}
+
+async function associateDishesOrderWithDish() {
+  const relatedDish0 = await Dishes.findOne({
     offset: Math.floor(Math.random() * (await Dishes.count())),
   });
-  const DishesOrdered3 = await DishesOrdered.findOne({
+  const DishesOrder0 = await DishesOrder.findOne({
     order: [['id', 'ASC']],
-    offset: 3,
+    offset: 0,
   });
-  if (DishesOrdered3?.setDish) {
-    await DishesOrdered3.setDish(relatedDish3);
+  if (DishesOrder0?.setDish) {
+    await DishesOrder0.setDish(relatedDish0);
+  }
+
+  const relatedDish1 = await Dishes.findOne({
+    offset: Math.floor(Math.random() * (await Dishes.count())),
+  });
+  const DishesOrder1 = await DishesOrder.findOne({
+    order: [['id', 'ASC']],
+    offset: 1,
+  });
+  if (DishesOrder1?.setDish) {
+    await DishesOrder1.setDish(relatedDish1);
+  }
+
+  const relatedDish2 = await Dishes.findOne({
+    offset: Math.floor(Math.random() * (await Dishes.count())),
+  });
+  const DishesOrder2 = await DishesOrder.findOne({
+    order: [['id', 'ASC']],
+    offset: 2,
+  });
+  if (DishesOrder2?.setDish) {
+    await DishesOrder2.setDish(relatedDish2);
   }
 }
 
@@ -626,17 +445,6 @@ async function associateOrderWithClient() {
   if (Order2?.setClient) {
     await Order2.setClient(relatedClient2);
   }
-
-  const relatedClient3 = await Clients.findOne({
-    offset: Math.floor(Math.random() * (await Clients.count())),
-  });
-  const Order3 = await Orders.findOne({
-    order: [['id', 'ASC']],
-    offset: 3,
-  });
-  if (Order3?.setClient) {
-    await Order3.setClient(relatedClient3);
-  }
 }
 
 async function associateOrderWithSource() {
@@ -672,17 +480,6 @@ async function associateOrderWithSource() {
   if (Order2?.setSource) {
     await Order2.setSource(relatedSource2);
   }
-
-  const relatedSource3 = await Sources.findOne({
-    offset: Math.floor(Math.random() * (await Sources.count())),
-  });
-  const Order3 = await Orders.findOne({
-    order: [['id', 'ASC']],
-    offset: 3,
-  });
-  if (Order3?.setSource) {
-    await Order3.setSource(relatedSource3);
-  }
 }
 
 module.exports = {
@@ -695,7 +492,7 @@ module.exports = {
 
     await Dishes.bulkCreate(DishesData);
 
-    await DishesOrdered.bulkCreate(DishesOrderedData);
+    await DishesOrder.bulkCreate(DishesOrderData);
 
     await Ingredients.bulkCreate(IngredientsData);
 
@@ -703,22 +500,20 @@ module.exports = {
 
     await Sources.bulkCreate(SourcesData);
 
+    await InvalidTable.bulkCreate(InvalidTableData);
+
     await Promise.all([
       // Similar logic for "relation_many"
 
       await associateClientAddressWithClient(),
 
-      await associateDishIngredientWithIngredient_1(),
+      await associateDishIngredientWithDish(),
 
-      await associateDishIngredientWithIngredient_2(),
+      await associateDishIngredientWithIngredient(),
 
-      await associateDishIngredientWithIngredient_3(),
+      await associateDishesOrderWithOrder(),
 
-      // Similar logic for "relation_many"
-
-      await associateDishesOrderedWithOrder(),
-
-      await associateDishesOrderedWithDish(),
+      await associateDishesOrderWithDish(),
 
       await associateOrderWithClient(),
 
@@ -735,12 +530,14 @@ module.exports = {
 
     await queryInterface.bulkDelete('dishes', null, {});
 
-    await queryInterface.bulkDelete('dishes_ordered', null, {});
+    await queryInterface.bulkDelete('dishes_order', null, {});
 
     await queryInterface.bulkDelete('ingredients', null, {});
 
     await queryInterface.bulkDelete('orders', null, {});
 
     await queryInterface.bulkDelete('sources', null, {});
+
+    await queryInterface.bulkDelete('invalid_table', null, {});
   },
 };

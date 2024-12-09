@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
 import { useAppDispatch, useAppSelector } from '../../stores/hooks';
 import { useRouter } from 'next/router';
-import { fetch } from '../../stores/dish_ingredients/dish_ingredientsSlice';
+import { fetch } from '../../stores/invalid_table/invalid_tableSlice';
 import { saveFile } from '../../helpers/fileSaver';
 import dataFormatter from '../../helpers/dataFormatter';
 import ImageField from '../../components/ImageField';
@@ -21,12 +21,10 @@ import { mdiChartTimelineVariant } from '@mdi/js';
 import { SwitchField } from '../../components/SwitchField';
 import FormField from '../../components/FormField';
 
-const Dish_ingredientsView = () => {
+const Invalid_tableView = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { dish_ingredients } = useAppSelector(
-    (state) => state.dish_ingredients,
-  );
+  const { invalid_table } = useAppSelector((state) => state.invalid_table);
 
   const { id } = router.query;
 
@@ -42,42 +40,23 @@ const Dish_ingredientsView = () => {
   return (
     <>
       <Head>
-        <title>{getPageTitle('View dish_ingredients')}</title>
+        <title>{getPageTitle('View invalid_table')}</title>
       </Head>
       <SectionMain>
         <SectionTitleLineWithButton
           icon={mdiChartTimelineVariant}
-          title={removeLastCharacter('View dish_ingredients')}
+          title={removeLastCharacter('View invalid_table')}
           main
         >
           {''}
         </SectionTitleLineWithButton>
         <CardBox>
-          <div className={'mb-4'}>
-            <p className={'block font-bold mb-2'}>Dish</p>
-
-            <p>{dish_ingredients?.dish?.name ?? 'No data'}</p>
-          </div>
-
-          <div className={'mb-4'}>
-            <p className={'block font-bold mb-2'}>Ingredient</p>
-
-            <p>{dish_ingredients?.ingredient?.name ?? 'No data'}</p>
-          </div>
-
-          <div className={'mb-4'}>
-            <p className={'block font-bold mb-2'}>Quantity</p>
-            <p>{dish_ingredients?.quantity || 'No data'}</p>
-          </div>
-
           <BaseDivider />
 
           <BaseButton
             color='info'
             label='Back'
-            onClick={() =>
-              router.push('/dish_ingredients/dish_ingredients-list')
-            }
+            onClick={() => router.push('/invalid_table/invalid_table-list')}
           />
         </CardBox>
       </SectionMain>
@@ -85,12 +64,12 @@ const Dish_ingredientsView = () => {
   );
 };
 
-Dish_ingredientsView.getLayout = function getLayout(page: ReactElement) {
+Invalid_tableView.getLayout = function getLayout(page: ReactElement) {
   return (
-    <LayoutAuthenticated permission={'READ_DISH_INGREDIENTS'}>
+    <LayoutAuthenticated permission={'READ_INVALID_TABLE'}>
       {page}
     </LayoutAuthenticated>
   );
 };
 
-export default Dish_ingredientsView;
+export default Invalid_tableView;

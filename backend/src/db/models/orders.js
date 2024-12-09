@@ -53,8 +53,8 @@ module.exports = function (sequelize, DataTypes) {
   orders.associate = (db) => {
     /// loop through entities and it's fields, and if ref === current e[name] and create relation has many on parent entity
 
-    db.orders.hasMany(db.dishes_ordered, {
-      as: 'dishes_ordered_order',
+    db.orders.hasMany(db.dishes_order, {
+      as: 'dishes_order_order',
       foreignKey: {
         name: 'orderId',
       },

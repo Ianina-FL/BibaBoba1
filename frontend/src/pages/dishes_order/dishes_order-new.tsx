@@ -28,26 +28,26 @@ import { SelectField } from '../../components/SelectField';
 import { SelectFieldMany } from '../../components/SelectFieldMany';
 import { RichTextField } from '../../components/RichTextField';
 
-import { create } from '../../stores/dish_ingredients/dish_ingredientsSlice';
+import { create } from '../../stores/dishes_order/dishes_orderSlice';
 import { useAppDispatch } from '../../stores/hooks';
 import { useRouter } from 'next/router';
 import moment from 'moment';
 
 const initialValues = {
-  dish: '',
+  order: '',
 
-  ingredient: '',
+  dish: '',
 
   quantity: '',
 };
 
-const Dish_ingredientsNew = () => {
+const Dishes_orderNew = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const handleSubmit = async (data) => {
     await dispatch(create(data));
-    await router.push('/dish_ingredients/dish_ingredients-list');
+    await router.push('/dishes_order/dishes_order-list');
   };
   return (
     <>
@@ -68,6 +68,16 @@ const Dish_ingredientsNew = () => {
             onSubmit={(values) => handleSubmit(values)}
           >
             <Form>
+              <FormField label='Order' labelFor='order'>
+                <Field
+                  name='order'
+                  id='order'
+                  component={SelectField}
+                  options={[]}
+                  itemRef={'orders'}
+                ></Field>
+              </FormField>
+
               <FormField label='Dish' labelFor='dish'>
                 <Field
                   name='dish'
@@ -75,16 +85,6 @@ const Dish_ingredientsNew = () => {
                   component={SelectField}
                   options={[]}
                   itemRef={'dishes'}
-                ></Field>
-              </FormField>
-
-              <FormField label='Ingredient' labelFor='ingredient'>
-                <Field
-                  name='ingredient'
-                  id='ingredient'
-                  component={SelectField}
-                  options={[]}
-                  itemRef={'ingredients'}
                 ></Field>
               </FormField>
 
@@ -101,9 +101,7 @@ const Dish_ingredientsNew = () => {
                   color='danger'
                   outline
                   label='Cancel'
-                  onClick={() =>
-                    router.push('/dish_ingredients/dish_ingredients-list')
-                  }
+                  onClick={() => router.push('/dishes_order/dishes_order-list')}
                 />
               </BaseButtons>
             </Form>
@@ -114,12 +112,12 @@ const Dish_ingredientsNew = () => {
   );
 };
 
-Dish_ingredientsNew.getLayout = function getLayout(page: ReactElement) {
+Dishes_orderNew.getLayout = function getLayout(page: ReactElement) {
   return (
-    <LayoutAuthenticated permission={'CREATE_DISH_INGREDIENTS'}>
+    <LayoutAuthenticated permission={'CREATE_DISHES_ORDER'}>
       {page}
     </LayoutAuthenticated>
   );
 };
 
-export default Dish_ingredientsNew;
+export default Dishes_orderNew;

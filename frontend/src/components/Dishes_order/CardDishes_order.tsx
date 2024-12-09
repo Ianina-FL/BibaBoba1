@@ -10,7 +10,7 @@ import LoadingSpinner from '../LoadingSpinner';
 import { hasPermission } from '../../helpers/userPermissions';
 
 type Props = {
-  dish_ingredients: any[];
+  dishes_order: any[];
   loading: boolean;
   onDelete: (id: string) => void;
   onView: (id: string) => void;
@@ -21,7 +21,7 @@ type Props = {
 };
 
 const CardUsers = ({
-  dish_ingredients,
+  dishes_order,
   loading,
   onEdit,
   onView,
@@ -39,10 +39,7 @@ const CardUsers = ({
   const focusRing = useAppSelector((state) => state.style.focusRingColor);
 
   const currentUser = useAppSelector((state) => state.auth.currentUser);
-  const hasUpdatePermission = hasPermission(
-    currentUser,
-    'UPDATE_DISH_INGREDIENTS',
-  );
+  const hasUpdatePermission = hasPermission(currentUser, 'UPDATE_DISHES_ORDER');
 
   return (
     <div className={'p-4'}>
@@ -52,7 +49,7 @@ const CardUsers = ({
         className='grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 2xl:grid-cols-4 xl:gap-x-8'
       >
         {!loading &&
-          dish_ingredients.map((item, index) => (
+          dishes_order.map((item, index) => (
             <li
               key={item.id}
               className={`overflow-hidden ${
@@ -68,7 +65,7 @@ const CardUsers = ({
                   className='text-lg font-bold leading-6 line-clamp-1'
                   onClick={() => onView(item.id)}
                 >
-                  {item.dish}
+                  {item.order}
                 </button>
 
                 <div className='ml-auto '>
@@ -77,31 +74,27 @@ const CardUsers = ({
                     onView={onView}
                     onEdit={onEdit}
                     itemId={item.id}
-                    pathEdit={`/dish_ingredients/dish_ingredients-edit/?id=${item.id}`}
-                    pathView={`/dish_ingredients/dish_ingredients-view/?id=${item.id}`}
+                    pathEdit={`/dishes_order/dishes_order-edit/?id=${item.id}`}
+                    pathView={`/dishes_order/dishes_order-view/?id=${item.id}`}
                     hasUpdatePermission={hasUpdatePermission}
                   />
                 </div>
               </div>
               <dl className='divide-y  divide-gray-600   dark:divide-dark-700 px-6 py-4 text-sm leading-6 h-64 overflow-y-auto'>
                 <div className='flex justify-between gap-x-4 py-3'>
-                  <dt className='  text-gray-500  dark:text-dark-600'>Dish</dt>
+                  <dt className='  text-gray-500  dark:text-dark-600'>Order</dt>
                   <dd className='flex items-start gap-x-2'>
                     <div className='font-medium line-clamp-4'>
-                      {dataFormatter.dishesOneListFormatter(item.dish)}
+                      {dataFormatter.ordersOneListFormatter(item.order)}
                     </div>
                   </dd>
                 </div>
 
                 <div className='flex justify-between gap-x-4 py-3'>
-                  <dt className='  text-gray-500  dark:text-dark-600'>
-                    Ingredient
-                  </dt>
+                  <dt className='  text-gray-500  dark:text-dark-600'>Dish</dt>
                   <dd className='flex items-start gap-x-2'>
                     <div className='font-medium line-clamp-4'>
-                      {dataFormatter.ingredientsOneListFormatter(
-                        item.ingredient,
-                      )}
+                      {dataFormatter.dishesOneListFormatter(item.dish)}
                     </div>
                   </dd>
                 </div>
@@ -119,7 +112,7 @@ const CardUsers = ({
               </dl>
             </li>
           ))}
-        {!loading && dish_ingredients.length === 0 && (
+        {!loading && dishes_order.length === 0 && (
           <div className='col-span-full flex items-center justify-center h-40'>
             <p className=''>No data to display</p>
           </div>

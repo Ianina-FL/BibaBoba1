@@ -7,7 +7,7 @@ import LayoutAuthenticated from '../../layouts/Authenticated';
 import SectionMain from '../../components/SectionMain';
 import SectionTitleLineWithButton from '../../components/SectionTitleLineWithButton';
 import { getPageTitle } from '../../config';
-import TableIngredients from '../../components/Ingredients/TableIngredients';
+import TableDishes_order from '../../components/Dishes_order/TableDishes_order';
 import BaseButton from '../../components/BaseButton';
 import axios from 'axios';
 import Link from 'next/link';
@@ -17,11 +17,11 @@ import DragDropFilePicker from '../../components/DragDropFilePicker';
 import {
   setRefetch,
   uploadCsv,
-} from '../../stores/ingredients/ingredientsSlice';
+} from '../../stores/dishes_order/dishes_orderSlice';
 
 import { hasPermission } from '../../helpers/userPermissions';
 
-const IngredientsTablesPage = () => {
+const Dishes_orderTablesPage = () => {
   const [filterItems, setFilterItems] = useState([]);
   const [csvFile, setCsvFile] = useState<File | null>(null);
   const [isModalActive, setIsModalActive] = useState(false);
@@ -31,10 +31,15 @@ const IngredientsTablesPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const [filters] = useState([{ label: 'Name', title: 'name' }]);
+  const [filters] = useState([
+    { label: 'Quantity', title: 'quantity', number: 'true' },
+
+    { label: 'Order', title: 'order' },
+    { label: 'Dish', title: 'dish' },
+  ]);
 
   const hasCreatePermission =
-    currentUser && hasPermission(currentUser, 'CREATE_INGREDIENTS');
+    currentUser && hasPermission(currentUser, 'CREATE_DISHES_ORDER');
 
   const addFilter = () => {
     const newItem = {
@@ -50,9 +55,9 @@ const IngredientsTablesPage = () => {
     setFilterItems([...filterItems, newItem]);
   };
 
-  const getIngredientsCSV = async () => {
+  const getDishes_orderCSV = async () => {
     const response = await axios({
-      url: '/ingredients?filetype=csv',
+      url: '/dishes_order?filetype=csv',
       method: 'GET',
       responseType: 'blob',
     });
@@ -60,7 +65,7 @@ const IngredientsTablesPage = () => {
     const blob = new Blob([response.data], { type: type });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.download = 'ingredientsCSV.csv';
+    link.download = 'dishes_orderCSV.csv';
     link.click();
   };
 
@@ -80,12 +85,12 @@ const IngredientsTablesPage = () => {
   return (
     <>
       <Head>
-        <title>{getPageTitle('Ingredients')}</title>
+        <title>{getPageTitle('Dishes_order')}</title>
       </Head>
       <SectionMain>
         <SectionTitleLineWithButton
           icon={mdiChartTimelineVariant}
-          title='Ingredients'
+          title='Dishes_order'
           main
         >
           {''}
@@ -94,7 +99,7 @@ const IngredientsTablesPage = () => {
           {hasCreatePermission && (
             <BaseButton
               className={'mr-3'}
-              href={'/ingredients/ingredients-new'}
+              href={'/dishes_order/dishes_order-new'}
               color='info'
               label='New Item'
             />
@@ -110,7 +115,7 @@ const IngredientsTablesPage = () => {
             className={'mr-3'}
             color='info'
             label='Download CSV'
-            onClick={getIngredientsCSV}
+            onClick={getDishes_orderCSV}
           />
 
           {hasCreatePermission && (
@@ -123,18 +128,20 @@ const IngredientsTablesPage = () => {
 
           <div className='md:inline-flex items-center ms-auto'>
             <div id='delete-rows-button'></div>
+          </div>
 
-            <Link href={'/ingredients/ingredients-list'}>
-              Back to <span className='capitalize'>list</span>
+          <div className='md:inline-flex items-center ms-auto'>
+            <Link href={'/dishes_order/dishes_order-table'}>
+              Switch to Table
             </Link>
           </div>
         </CardBox>
         <CardBox className='mb-6' hasTable>
-          <TableIngredients
+          <TableDishes_order
             filterItems={filterItems}
             setFilterItems={setFilterItems}
             filters={filters}
-            showGrid={true}
+            showGrid={false}
           />
         </CardBox>
       </SectionMain>
@@ -157,12 +164,12 @@ const IngredientsTablesPage = () => {
   );
 };
 
-IngredientsTablesPage.getLayout = function getLayout(page: ReactElement) {
+Dishes_orderTablesPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <LayoutAuthenticated permission={'READ_INGREDIENTS'}>
+    <LayoutAuthenticated permission={'READ_DISHES_ORDER'}>
       {page}
     </LayoutAuthenticated>
   );
 };
 
-export default IngredientsTablesPage;
+export default Dishes_orderTablesPage;

@@ -11,21 +11,21 @@ import {
   deleteItem,
   setRefetch,
   deleteItemsByIds,
-} from '../../stores/dish_ingredients/dish_ingredientsSlice';
+} from '../../stores/dishes_order/dishes_orderSlice';
 import { useAppDispatch, useAppSelector } from '../../stores/hooks';
 import { useRouter } from 'next/router';
 import { Field, Form, Formik } from 'formik';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { loadColumns } from './configureDish_ingredientsCols';
+import { loadColumns } from './configureDishes_orderCols';
 import _ from 'lodash';
 import dataFormatter from '../../helpers/dataFormatter';
 import { dataGridStyles } from '../../styles';
 
-import ListDish_ingredients from './ListDish_ingredients';
+import ListDishes_order from './ListDishes_order';
 
 const perPage = 10;
 
-const TableSampleDish_ingredients = ({
+const TableSampleDishes_order = ({
   filterItems,
   setFilterItems,
   filters,
@@ -48,12 +48,12 @@ const TableSampleDish_ingredients = ({
     },
   ]);
   const {
-    dish_ingredients,
+    dishes_order,
     loading,
     count,
-    notify: dish_ingredientsNotify,
+    notify: dishes_orderNotify,
     refetch,
-  } = useAppSelector((state) => state.dish_ingredients);
+  } = useAppSelector((state) => state.dishes_order);
   const { currentUser } = useAppSelector((state) => state.auth);
   const focusRing = useAppSelector((state) => state.style.focusRingColor);
   const bgColor = useAppSelector((state) => state.style.bgLayoutColor);
@@ -75,13 +75,13 @@ const TableSampleDish_ingredients = ({
   };
 
   useEffect(() => {
-    if (dish_ingredientsNotify.showNotification) {
+    if (dishes_orderNotify.showNotification) {
       notify(
-        dish_ingredientsNotify.typeNotification,
-        dish_ingredientsNotify.textNotification,
+        dishes_orderNotify.typeNotification,
+        dishes_orderNotify.textNotification,
       );
     }
-  }, [dish_ingredientsNotify.showNotification]);
+  }, [dishes_orderNotify.showNotification]);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -104,11 +104,11 @@ const TableSampleDish_ingredients = ({
   };
 
   const handleEditAction = (id: string) => {
-    router.push(`/dish_ingredients/${id}`);
+    router.push(`/dishes_order/${id}`);
   };
 
   const handleViewAction = (id: string) => {
-    router.push(`/dish_ingredients/dish_ingredients-view/?id=${id}`);
+    router.push(`/dishes_order/dishes_order-view/?id=${id}`);
   };
 
   const handleDeleteModalAction = (id: string) => {
@@ -182,7 +182,7 @@ const TableSampleDish_ingredients = ({
       handleDeleteModalAction,
       handleViewAction,
       handleEditAction,
-      `dish_ingredients`,
+      `dishes_order`,
       currentUser,
     ).then((newCols) => setColumns(newCols));
   }, [currentUser]);
@@ -216,7 +216,7 @@ const TableSampleDish_ingredients = ({
         sx={dataGridStyles}
         className={'datagrid--table'}
         getRowClassName={() => `datagrid--row`}
-        rows={dish_ingredients ?? []}
+        rows={dishes_order ?? []}
         columns={columns}
         initialState={{
           pagination: {
@@ -427,9 +427,9 @@ const TableSampleDish_ingredients = ({
         <p>Are you sure you want to delete this item?</p>
       </CardBoxModal>
 
-      {dish_ingredients && Array.isArray(dish_ingredients) && !showGrid && (
-        <ListDish_ingredients
-          dish_ingredients={dish_ingredients}
+      {dishes_order && Array.isArray(dishes_order) && !showGrid && (
+        <ListDishes_order
+          dishes_order={dishes_order}
           loading={loading}
           onView={handleViewAction}
           onEdit={handleEditAction}
@@ -458,4 +458,4 @@ const TableSampleDish_ingredients = ({
   );
 };
 
-export default TableSampleDish_ingredients;
+export default TableSampleDishes_order;

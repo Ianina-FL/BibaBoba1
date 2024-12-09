@@ -28,26 +28,20 @@ import { SelectField } from '../../components/SelectField';
 import { SelectFieldMany } from '../../components/SelectFieldMany';
 import { RichTextField } from '../../components/RichTextField';
 
-import { create } from '../../stores/dish_ingredients/dish_ingredientsSlice';
+import { create } from '../../stores/invalid_table/invalid_tableSlice';
 import { useAppDispatch } from '../../stores/hooks';
 import { useRouter } from 'next/router';
 import moment from 'moment';
 
-const initialValues = {
-  dish: '',
+const initialValues = {};
 
-  ingredient: '',
-
-  quantity: '',
-};
-
-const Dish_ingredientsNew = () => {
+const Invalid_tableNew = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const handleSubmit = async (data) => {
     await dispatch(create(data));
-    await router.push('/dish_ingredients/dish_ingredients-list');
+    await router.push('/invalid_table/invalid_table-list');
   };
   return (
     <>
@@ -68,30 +62,6 @@ const Dish_ingredientsNew = () => {
             onSubmit={(values) => handleSubmit(values)}
           >
             <Form>
-              <FormField label='Dish' labelFor='dish'>
-                <Field
-                  name='dish'
-                  id='dish'
-                  component={SelectField}
-                  options={[]}
-                  itemRef={'dishes'}
-                ></Field>
-              </FormField>
-
-              <FormField label='Ingredient' labelFor='ingredient'>
-                <Field
-                  name='ingredient'
-                  id='ingredient'
-                  component={SelectField}
-                  options={[]}
-                  itemRef={'ingredients'}
-                ></Field>
-              </FormField>
-
-              <FormField label='Quantity'>
-                <Field type='number' name='quantity' placeholder='Quantity' />
-              </FormField>
-
               <BaseDivider />
               <BaseButtons>
                 <BaseButton type='submit' color='info' label='Submit' />
@@ -102,7 +72,7 @@ const Dish_ingredientsNew = () => {
                   outline
                   label='Cancel'
                   onClick={() =>
-                    router.push('/dish_ingredients/dish_ingredients-list')
+                    router.push('/invalid_table/invalid_table-list')
                   }
                 />
               </BaseButtons>
@@ -114,12 +84,12 @@ const Dish_ingredientsNew = () => {
   );
 };
 
-Dish_ingredientsNew.getLayout = function getLayout(page: ReactElement) {
+Invalid_tableNew.getLayout = function getLayout(page: ReactElement) {
   return (
-    <LayoutAuthenticated permission={'CREATE_DISH_INGREDIENTS'}>
+    <LayoutAuthenticated permission={'CREATE_INVALID_TABLE'}>
       {page}
     </LayoutAuthenticated>
   );
 };
 
-export default Dish_ingredientsNew;
+export default Invalid_tableNew;

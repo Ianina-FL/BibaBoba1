@@ -27,12 +27,19 @@ const Dashboard = () => {
   const [clients, setClients] = React.useState('Loading...');
   const [dish_ingredients, setDish_ingredients] = React.useState('Loading...');
   const [dishes, setDishes] = React.useState('Loading...');
-  const [dishes_ordered, setDishes_ordered] = React.useState('Loading...');
+  const [dishes_order, setDishes_order] = React.useState('Loading...');
   const [ingredients, setIngredients] = React.useState('Loading...');
   const [orders, setOrders] = React.useState('Loading...');
   const [sources, setSources] = React.useState('Loading...');
   const [roles, setRoles] = React.useState('Loading...');
   const [permissions, setPermissions] = React.useState('Loading...');
+  const [users, setUsers] = React.useState('Loading...');
+  const [users, setUsers] = React.useState('Loading...');
+  const [users, setUsers] = React.useState('Loading...');
+  const [users, setUsers] = React.useState('Loading...');
+  const [users, setUsers] = React.useState('Loading...');
+  const [invalid_table, setInvalid_table] = React.useState('Loading...');
+  const [users, setUsers] = React.useState('Loading...');
 
   const [widgetsRole, setWidgetsRole] = React.useState({
     role: { value: '', label: '' },
@@ -49,12 +56,19 @@ const Dashboard = () => {
       'clients',
       'dish_ingredients',
       'dishes',
-      'dishes_ordered',
+      'dishes_order',
       'ingredients',
       'orders',
       'sources',
       'roles',
       'permissions',
+      'users',
+      'users',
+      'users',
+      'users',
+      'users',
+      'invalid_table',
+      'users',
     ];
     const fns = [
       setUsers,
@@ -62,12 +76,19 @@ const Dashboard = () => {
       setClients,
       setDish_ingredients,
       setDishes,
-      setDishes_ordered,
+      setDishes_order,
       setIngredients,
       setOrders,
       setSources,
       setRoles,
       setPermissions,
+      setUsers,
+      setUsers,
+      setUsers,
+      setUsers,
+      setUsers,
+      setInvalid_table,
+      setUsers,
     ];
 
     const requests = entities.map((entity, index) => {
@@ -336,8 +357,8 @@ const Dashboard = () => {
             </Link>
           )}
 
-          {hasPermission(currentUser, 'READ_DISHES_ORDERED') && (
-            <Link href={'/dishes_ordered/dishes_ordered-list'}>
+          {hasPermission(currentUser, 'READ_DISHES_ORDER') && (
+            <Link href={'/dishes_order/dishes_order-list'}>
               <div
                 className={`${
                   corners !== 'rounded-full' ? corners : 'rounded-3xl'
@@ -346,10 +367,10 @@ const Dashboard = () => {
                 <div className='flex justify-between align-center'>
                   <div>
                     <div className='text-lg leading-tight   text-gray-500 dark:text-gray-400'>
-                      Dishes ordered
+                      Dishes order
                     </div>
                     <div className='text-3xl leading-tight font-semibold'>
-                      {dishes_ordered}
+                      {dishes_order}
                     </div>
                   </div>
                   <div>
@@ -523,6 +544,230 @@ const Dashboard = () => {
                       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                       // @ts-ignore
                       path={icon.mdiShieldAccountOutline || icon.mdiTable}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Link>
+          )}
+
+          {hasPermission(currentUser, 'READ_USERS') && (
+            <Link href={'/users/users-list'}>
+              <div
+                className={`${
+                  corners !== 'rounded-full' ? corners : 'rounded-3xl'
+                } dark:bg-dark-900 ${cardsStyle} dark:border-dark-700 p-6`}
+              >
+                <div className='flex justify-between align-center'>
+                  <div>
+                    <div className='text-lg leading-tight   text-gray-500 dark:text-gray-400'>
+                      Users
+                    </div>
+                    <div className='text-3xl leading-tight font-semibold'>
+                      {users}
+                    </div>
+                  </div>
+                  <div>
+                    <BaseIcon
+                      className={`${iconsColor}`}
+                      w='w-16'
+                      h='h-16'
+                      size={48}
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      path={icon.mdiAccountGroup || icon.mdiTable}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Link>
+          )}
+
+          {hasPermission(currentUser, 'READ_USERS') && (
+            <Link href={'/users/users-list'}>
+              <div
+                className={`${
+                  corners !== 'rounded-full' ? corners : 'rounded-3xl'
+                } dark:bg-dark-900 ${cardsStyle} dark:border-dark-700 p-6`}
+              >
+                <div className='flex justify-between align-center'>
+                  <div>
+                    <div className='text-lg leading-tight   text-gray-500 dark:text-gray-400'>
+                      Users
+                    </div>
+                    <div className='text-3xl leading-tight font-semibold'>
+                      {users}
+                    </div>
+                  </div>
+                  <div>
+                    <BaseIcon
+                      className={`${iconsColor}`}
+                      w='w-16'
+                      h='h-16'
+                      size={48}
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      path={icon.mdiAccountGroup || icon.mdiTable}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Link>
+          )}
+
+          {hasPermission(currentUser, 'READ_USERS') && (
+            <Link href={'/users/users-list'}>
+              <div
+                className={`${
+                  corners !== 'rounded-full' ? corners : 'rounded-3xl'
+                } dark:bg-dark-900 ${cardsStyle} dark:border-dark-700 p-6`}
+              >
+                <div className='flex justify-between align-center'>
+                  <div>
+                    <div className='text-lg leading-tight   text-gray-500 dark:text-gray-400'>
+                      Users
+                    </div>
+                    <div className='text-3xl leading-tight font-semibold'>
+                      {users}
+                    </div>
+                  </div>
+                  <div>
+                    <BaseIcon
+                      className={`${iconsColor}`}
+                      w='w-16'
+                      h='h-16'
+                      size={48}
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      path={icon.mdiAccountGroup || icon.mdiTable}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Link>
+          )}
+
+          {hasPermission(currentUser, 'READ_USERS') && (
+            <Link href={'/users/users-list'}>
+              <div
+                className={`${
+                  corners !== 'rounded-full' ? corners : 'rounded-3xl'
+                } dark:bg-dark-900 ${cardsStyle} dark:border-dark-700 p-6`}
+              >
+                <div className='flex justify-between align-center'>
+                  <div>
+                    <div className='text-lg leading-tight   text-gray-500 dark:text-gray-400'>
+                      Users
+                    </div>
+                    <div className='text-3xl leading-tight font-semibold'>
+                      {users}
+                    </div>
+                  </div>
+                  <div>
+                    <BaseIcon
+                      className={`${iconsColor}`}
+                      w='w-16'
+                      h='h-16'
+                      size={48}
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      path={icon.mdiAccountGroup || icon.mdiTable}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Link>
+          )}
+
+          {hasPermission(currentUser, 'READ_USERS') && (
+            <Link href={'/users/users-list'}>
+              <div
+                className={`${
+                  corners !== 'rounded-full' ? corners : 'rounded-3xl'
+                } dark:bg-dark-900 ${cardsStyle} dark:border-dark-700 p-6`}
+              >
+                <div className='flex justify-between align-center'>
+                  <div>
+                    <div className='text-lg leading-tight   text-gray-500 dark:text-gray-400'>
+                      Users
+                    </div>
+                    <div className='text-3xl leading-tight font-semibold'>
+                      {users}
+                    </div>
+                  </div>
+                  <div>
+                    <BaseIcon
+                      className={`${iconsColor}`}
+                      w='w-16'
+                      h='h-16'
+                      size={48}
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      path={icon.mdiAccountGroup || icon.mdiTable}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Link>
+          )}
+
+          {hasPermission(currentUser, 'READ_INVALID_TABLE') && (
+            <Link href={'/invalid_table/invalid_table-list'}>
+              <div
+                className={`${
+                  corners !== 'rounded-full' ? corners : 'rounded-3xl'
+                } dark:bg-dark-900 ${cardsStyle} dark:border-dark-700 p-6`}
+              >
+                <div className='flex justify-between align-center'>
+                  <div>
+                    <div className='text-lg leading-tight   text-gray-500 dark:text-gray-400'>
+                      Invalid table
+                    </div>
+                    <div className='text-3xl leading-tight font-semibold'>
+                      {invalid_table}
+                    </div>
+                  </div>
+                  <div>
+                    <BaseIcon
+                      className={`${iconsColor}`}
+                      w='w-16'
+                      h='h-16'
+                      size={48}
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      path={icon.mdiTable || icon.mdiTable}
+                    />
+                  </div>
+                </div>
+              </div>
+            </Link>
+          )}
+
+          {hasPermission(currentUser, 'READ_USERS') && (
+            <Link href={'/users/users-list'}>
+              <div
+                className={`${
+                  corners !== 'rounded-full' ? corners : 'rounded-3xl'
+                } dark:bg-dark-900 ${cardsStyle} dark:border-dark-700 p-6`}
+              >
+                <div className='flex justify-between align-center'>
+                  <div>
+                    <div className='text-lg leading-tight   text-gray-500 dark:text-gray-400'>
+                      Users
+                    </div>
+                    <div className='text-3xl leading-tight font-semibold'>
+                      {users}
+                    </div>
+                  </div>
+                  <div>
+                    <BaseIcon
+                      className={`${iconsColor}`}
+                      w='w-16'
+                      h='h-16'
+                      size={48}
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      path={icon.mdiAccountGroup || icon.mdiTable}
                     />
                   </div>
                 </div>

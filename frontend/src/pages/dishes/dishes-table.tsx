@@ -126,7 +126,7 @@ const DishesTablesPage = () => {
             <div id='delete-rows-button'></div>
 
             <Link href={'/dishes/dishes-list'}>
-              Back to <span className='capitalize'>card</span>
+              Back to <span className='capitalize'>list</span>
             </Link>
           </div>
         </CardBox>

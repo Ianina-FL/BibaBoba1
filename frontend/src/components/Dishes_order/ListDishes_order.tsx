@@ -11,7 +11,7 @@ import LoadingSpinner from '../LoadingSpinner';
 import { hasPermission } from '../../helpers/userPermissions';
 
 type Props = {
-  dish_ingredients: any[];
+  dishes_order: any[];
   loading: boolean;
   onDelete: (id: string) => void;
   onView: (id: string) => void;
@@ -21,8 +21,8 @@ type Props = {
   onPageChange: (page: number) => void;
 };
 
-const ListDish_ingredients = ({
-  dish_ingredients,
+const ListDishes_order = ({
+  dishes_order,
   loading,
   onEdit,
   onView,
@@ -32,10 +32,7 @@ const ListDish_ingredients = ({
   onPageChange,
 }: Props) => {
   const currentUser = useAppSelector((state) => state.auth.currentUser);
-  const hasUpdatePermission = hasPermission(
-    currentUser,
-    'UPDATE_DISH_INGREDIENTS',
-  );
+  const hasUpdatePermission = hasPermission(currentUser, 'UPDATE_DISHES_ORDER');
 
   const corners = useAppSelector((state) => state.style.corners);
   const bgColor = useAppSelector((state) => state.style.cardsColor);
@@ -45,7 +42,7 @@ const ListDish_ingredients = ({
       <div className='relative overflow-x-auto p-4 space-y-4'>
         {loading && <LoadingSpinner />}
         {!loading &&
-          dish_ingredients.map((item) => (
+          dishes_order.map((item) => (
             <CardBox
               hasTable
               isList
@@ -64,18 +61,16 @@ const ListDish_ingredients = ({
                   onClick={() => onView(item.id)}
                 >
                   <div className={'flex-1 px-3'}>
-                    <p className={'text-xs   text-gray-500 '}>Dish</p>
+                    <p className={'text-xs   text-gray-500 '}>Order</p>
                     <p className={'line-clamp-2'}>
-                      {dataFormatter.dishesOneListFormatter(item.dish)}
+                      {dataFormatter.ordersOneListFormatter(item.order)}
                     </p>
                   </div>
 
                   <div className={'flex-1 px-3'}>
-                    <p className={'text-xs   text-gray-500 '}>Ingredient</p>
+                    <p className={'text-xs   text-gray-500 '}>Dish</p>
                     <p className={'line-clamp-2'}>
-                      {dataFormatter.ingredientsOneListFormatter(
-                        item.ingredient,
-                      )}
+                      {dataFormatter.dishesOneListFormatter(item.dish)}
                     </p>
                   </div>
 
@@ -89,14 +84,14 @@ const ListDish_ingredients = ({
                   onView={onView}
                   onEdit={onEdit}
                   itemId={item.id}
-                  pathEdit={`/dish_ingredients/dish_ingredients-edit/?id=${item.id}`}
-                  pathView={`/dish_ingredients/dish_ingredients-view/?id=${item.id}`}
+                  pathEdit={`/dishes_order/dishes_order-edit/?id=${item.id}`}
+                  pathView={`/dishes_order/dishes_order-view/?id=${item.id}`}
                   hasUpdatePermission={hasUpdatePermission}
                 />
               </div>
             </CardBox>
           ))}
-        {!loading && dish_ingredients.length === 0 && (
+        {!loading && dishes_order.length === 0 && (
           <div className='col-span-full flex items-center justify-center h-40'>
             <p className=''>No data to display</p>
           </div>
@@ -113,4 +108,4 @@ const ListDish_ingredients = ({
   );
 };
 
-export default ListDish_ingredients;
+export default ListDishes_order;

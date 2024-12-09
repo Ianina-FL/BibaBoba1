@@ -7,7 +7,7 @@ import LayoutAuthenticated from '../../layouts/Authenticated';
 import SectionMain from '../../components/SectionMain';
 import SectionTitleLineWithButton from '../../components/SectionTitleLineWithButton';
 import { getPageTitle } from '../../config';
-import TableIngredients from '../../components/Ingredients/TableIngredients';
+import TableInvalid_table from '../../components/Invalid_table/TableInvalid_table';
 import BaseButton from '../../components/BaseButton';
 import axios from 'axios';
 import Link from 'next/link';
@@ -17,11 +17,11 @@ import DragDropFilePicker from '../../components/DragDropFilePicker';
 import {
   setRefetch,
   uploadCsv,
-} from '../../stores/ingredients/ingredientsSlice';
+} from '../../stores/invalid_table/invalid_tableSlice';
 
 import { hasPermission } from '../../helpers/userPermissions';
 
-const IngredientsTablesPage = () => {
+const Invalid_tableTablesPage = () => {
   const [filterItems, setFilterItems] = useState([]);
   const [csvFile, setCsvFile] = useState<File | null>(null);
   const [isModalActive, setIsModalActive] = useState(false);
@@ -31,10 +31,10 @@ const IngredientsTablesPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const [filters] = useState([{ label: 'Name', title: 'name' }]);
+  const [filters] = useState([]);
 
   const hasCreatePermission =
-    currentUser && hasPermission(currentUser, 'CREATE_INGREDIENTS');
+    currentUser && hasPermission(currentUser, 'CREATE_INVALID_TABLE');
 
   const addFilter = () => {
     const newItem = {
@@ -50,9 +50,9 @@ const IngredientsTablesPage = () => {
     setFilterItems([...filterItems, newItem]);
   };
 
-  const getIngredientsCSV = async () => {
+  const getInvalid_tableCSV = async () => {
     const response = await axios({
-      url: '/ingredients?filetype=csv',
+      url: '/invalid_table?filetype=csv',
       method: 'GET',
       responseType: 'blob',
     });
@@ -60,7 +60,7 @@ const IngredientsTablesPage = () => {
     const blob = new Blob([response.data], { type: type });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.download = 'ingredientsCSV.csv';
+    link.download = 'invalid_tableCSV.csv';
     link.click();
   };
 
@@ -80,12 +80,12 @@ const IngredientsTablesPage = () => {
   return (
     <>
       <Head>
-        <title>{getPageTitle('Ingredients')}</title>
+        <title>{getPageTitle('Invalid_table')}</title>
       </Head>
       <SectionMain>
         <SectionTitleLineWithButton
           icon={mdiChartTimelineVariant}
-          title='Ingredients'
+          title='Invalid_table'
           main
         >
           {''}
@@ -94,7 +94,7 @@ const IngredientsTablesPage = () => {
           {hasCreatePermission && (
             <BaseButton
               className={'mr-3'}
-              href={'/ingredients/ingredients-new'}
+              href={'/invalid_table/invalid_table-new'}
               color='info'
               label='New Item'
             />
@@ -110,7 +110,7 @@ const IngredientsTablesPage = () => {
             className={'mr-3'}
             color='info'
             label='Download CSV'
-            onClick={getIngredientsCSV}
+            onClick={getInvalid_tableCSV}
           />
 
           {hasCreatePermission && (
@@ -123,18 +123,14 @@ const IngredientsTablesPage = () => {
 
           <div className='md:inline-flex items-center ms-auto'>
             <div id='delete-rows-button'></div>
-
-            <Link href={'/ingredients/ingredients-list'}>
-              Back to <span className='capitalize'>list</span>
-            </Link>
           </div>
         </CardBox>
         <CardBox className='mb-6' hasTable>
-          <TableIngredients
+          <TableInvalid_table
             filterItems={filterItems}
             setFilterItems={setFilterItems}
             filters={filters}
-            showGrid={true}
+            showGrid={false}
           />
         </CardBox>
       </SectionMain>
@@ -157,12 +153,12 @@ const IngredientsTablesPage = () => {
   );
 };
 
-IngredientsTablesPage.getLayout = function getLayout(page: ReactElement) {
+Invalid_tableTablesPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <LayoutAuthenticated permission={'READ_INGREDIENTS'}>
+    <LayoutAuthenticated permission={'READ_INVALID_TABLE'}>
       {page}
     </LayoutAuthenticated>
   );
 };
 
-export default IngredientsTablesPage;
+export default Invalid_tableTablesPage;

@@ -40,15 +40,11 @@ const EditDish_ingredients = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const initVals = {
-    ingredient_1: '',
+    dish: '',
+
+    ingredient: '',
 
     quantity: '',
-
-    ingredient_2: '',
-
-    ingredient_3: '',
-
-    dish: [],
   };
   const [initialValues, setInitialValues] = useState(initVals);
 
@@ -105,12 +101,23 @@ const EditDish_ingredients = () => {
             onSubmit={(values) => handleSubmit(values)}
           >
             <Form>
-              <FormField label='Ingredient 1' labelFor='ingredient_1'>
+              <FormField label='Dish' labelFor='dish'>
                 <Field
-                  name='ingredient_1'
-                  id='ingredient_1'
+                  name='dish'
+                  id='dish'
                   component={SelectField}
-                  options={initialValues.ingredient_1}
+                  options={initialValues.dish}
+                  itemRef={'dishes'}
+                  showField={'name'}
+                ></Field>
+              </FormField>
+
+              <FormField label='Ingredient' labelFor='ingredient'>
+                <Field
+                  name='ingredient'
+                  id='ingredient'
+                  component={SelectField}
+                  options={initialValues.ingredient}
                   itemRef={'ingredients'}
                   showField={'name'}
                 ></Field>
@@ -118,39 +125,6 @@ const EditDish_ingredients = () => {
 
               <FormField label='Quantity'>
                 <Field type='number' name='quantity' placeholder='Quantity' />
-              </FormField>
-
-              <FormField label='Ingredient 2' labelFor='ingredient_2'>
-                <Field
-                  name='ingredient_2'
-                  id='ingredient_2'
-                  component={SelectField}
-                  options={initialValues.ingredient_2}
-                  itemRef={'ingredients'}
-                  showField={'name'}
-                ></Field>
-              </FormField>
-
-              <FormField label='Ingredient 3' labelFor='ingredient_3'>
-                <Field
-                  name='ingredient_3'
-                  id='ingredient_3'
-                  component={SelectField}
-                  options={initialValues.ingredient_3}
-                  itemRef={'ingredients'}
-                  showField={'name'}
-                ></Field>
-              </FormField>
-
-              <FormField label='Dish' labelFor='dish'>
-                <Field
-                  name='dish'
-                  id='dish'
-                  component={SelectFieldMany}
-                  options={initialValues.dish}
-                  itemRef={'ingredients'}
-                  showField={'name'}
-                ></Field>
               </FormField>
 
               <BaseDivider />

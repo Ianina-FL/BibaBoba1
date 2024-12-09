@@ -155,7 +155,7 @@ module.exports = class OrdersDBApi {
 
     const output = orders.get({ plain: true });
 
-    output.dishes_ordered_order = await orders.getDishes_ordered_order({
+    output.dishes_order_order = await orders.getDishes_order_order({
       transaction,
     });
 

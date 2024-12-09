@@ -1,7 +1,7 @@
 const express = require('express');
 
-const Dishes_orderedService = require('../services/dishes_ordered');
-const Dishes_orderedDBApi = require('../db/api/dishes_ordered');
+const Dishes_orderService = require('../services/dishes_order');
+const Dishes_orderDBApi = require('../db/api/dishes_order');
 const wrapAsync = require('../helpers').wrapAsync;
 
 const router = express.Router();
@@ -10,13 +10,13 @@ const { parse } = require('json2csv');
 
 const { checkCrudPermissions } = require('../middlewares/check-permissions');
 
-router.use(checkCrudPermissions('dishes_ordered'));
+router.use(checkCrudPermissions('dishes_order'));
 
 /**
  *  @swagger
  *  components:
  *    schemas:
- *      Dishes_ordered:
+ *      Dishes_order:
  *        type: object
  *        properties:
 
@@ -29,17 +29,17 @@ router.use(checkCrudPermissions('dishes_ordered'));
 /**
  *  @swagger
  * tags:
- *   name: Dishes_ordered
- *   description: The Dishes_ordered managing API
+ *   name: Dishes_order
+ *   description: The Dishes_order managing API
  */
 
 /**
  *  @swagger
- *  /api/dishes_ordered:
+ *  /api/dishes_order:
  *    post:
  *      security:
  *        - bearerAuth: []
- *      tags: [Dishes_ordered]
+ *      tags: [Dishes_order]
  *      summary: Add new item
  *      description: Add new item
  *      requestBody:
@@ -51,14 +51,14 @@ router.use(checkCrudPermissions('dishes_ordered'));
  *                data:
  *                  description: Data of the updated item
  *                  type: object
- *                  $ref: "#/components/schemas/Dishes_ordered"
+ *                  $ref: "#/components/schemas/Dishes_order"
  *      responses:
  *        200:
  *          description: The item was successfully added
  *          content:
  *            application/json:
  *              schema:
- *                $ref: "#/components/schemas/Dishes_ordered"
+ *                $ref: "#/components/schemas/Dishes_order"
  *        401:
  *          $ref: "#/components/responses/UnauthorizedError"
  *        405:
@@ -73,7 +73,7 @@ router.post(
       req.headers.referer ||
       `${req.protocol}://${req.hostname}${req.originalUrl}`;
     const link = new URL(referer);
-    await Dishes_orderedService.create(
+    await Dishes_orderService.create(
       req.body.data,
       req.currentUser,
       true,
@@ -90,7 +90,7 @@ router.post(
  *  post:
  *    security:
  *      - bearerAuth: []
- *    tags: [Dishes_ordered]
+ *    tags: [Dishes_order]
  *    summary: Bulk import items
  *    description: Bulk import items
  *    requestBody:
@@ -103,14 +103,14 @@ router.post(
  *              description: Data of the updated items
  *              type: array
  *              items:
- *                $ref: "#/components/schemas/Dishes_ordered"
+ *                $ref: "#/components/schemas/Dishes_order"
  *    responses:
  *      200:
  *        description: The items were successfully imported
  *    content:
  *      application/json:
  *        schema:
- *          $ref: "#/components/schemas/Dishes_ordered"
+ *          $ref: "#/components/schemas/Dishes_order"
  *      401:
  *        $ref: "#/components/responses/UnauthorizedError"
  *      405:
@@ -126,7 +126,7 @@ router.post(
       req.headers.referer ||
       `${req.protocol}://${req.hostname}${req.originalUrl}`;
     const link = new URL(referer);
-    await Dishes_orderedService.bulkImport(req, res, true, link.host);
+    await Dishes_orderService.bulkImport(req, res, true, link.host);
     const payload = true;
     res.status(200).send(payload);
   }),
@@ -134,11 +134,11 @@ router.post(
 
 /**
  *  @swagger
- *  /api/dishes_ordered/{id}:
+ *  /api/dishes_order/{id}:
  *    put:
  *      security:
  *        - bearerAuth: []
- *      tags: [Dishes_ordered]
+ *      tags: [Dishes_order]
  *      summary: Update the data of the selected item
  *      description: Update the data of the selected item
  *      parameters:
@@ -161,7 +161,7 @@ router.post(
  *                data:
  *                  description: Data of the updated item
  *                  type: object
- *                  $ref: "#/components/schemas/Dishes_ordered"
+ *                  $ref: "#/components/schemas/Dishes_order"
  *              required:
  *                - id
  *      responses:
@@ -170,7 +170,7 @@ router.post(
  *          content:
  *            application/json:
  *              schema:
- *                $ref: "#/components/schemas/Dishes_ordered"
+ *                $ref: "#/components/schemas/Dishes_order"
  *        400:
  *          description: Invalid ID supplied
  *        401:
@@ -183,7 +183,7 @@ router.post(
 router.put(
   '/:id',
   wrapAsync(async (req, res) => {
-    await Dishes_orderedService.update(
+    await Dishes_orderService.update(
       req.body.data,
       req.body.id,
       req.currentUser,
@@ -195,11 +195,11 @@ router.put(
 
 /**
  * @swagger
- *  /api/dishes_ordered/{id}:
+ *  /api/dishes_order/{id}:
  *    delete:
  *      security:
  *        - bearerAuth: []
- *      tags: [Dishes_ordered]
+ *      tags: [Dishes_order]
  *      summary: Delete the selected item
  *      description: Delete the selected item
  *      parameters:
@@ -215,7 +215,7 @@ router.put(
  *          content:
  *            application/json:
  *              schema:
- *                $ref: "#/components/schemas/Dishes_ordered"
+ *                $ref: "#/components/schemas/Dishes_order"
  *        400:
  *          description: Invalid ID supplied
  *        401:
@@ -228,7 +228,7 @@ router.put(
 router.delete(
   '/:id',
   wrapAsync(async (req, res) => {
-    await Dishes_orderedService.remove(req.params.id, req.currentUser);
+    await Dishes_orderService.remove(req.params.id, req.currentUser);
     const payload = true;
     res.status(200).send(payload);
   }),
@@ -236,11 +236,11 @@ router.delete(
 
 /**
  *  @swagger
- *  /api/dishes_ordered/deleteByIds:
+ *  /api/dishes_order/deleteByIds:
  *    post:
  *      security:
  *        - bearerAuth: []
- *      tags: [Dishes_ordered]
+ *      tags: [Dishes_order]
  *      summary: Delete the selected item list
  *      description: Delete the selected item list
  *      requestBody:
@@ -258,7 +258,7 @@ router.delete(
  *          content:
  *            application/json:
  *              schema:
- *                $ref: "#/components/schemas/Dishes_ordered"
+ *                $ref: "#/components/schemas/Dishes_order"
  *        401:
  *          $ref: "#/components/responses/UnauthorizedError"
  *        404:
@@ -269,7 +269,7 @@ router.delete(
 router.post(
   '/deleteByIds',
   wrapAsync(async (req, res) => {
-    await Dishes_orderedService.deleteByIds(req.body.data, req.currentUser);
+    await Dishes_orderService.deleteByIds(req.body.data, req.currentUser);
     const payload = true;
     res.status(200).send(payload);
   }),
@@ -277,22 +277,22 @@ router.post(
 
 /**
  *  @swagger
- *  /api/dishes_ordered:
+ *  /api/dishes_order:
  *    get:
  *      security:
  *        - bearerAuth: []
- *      tags: [Dishes_ordered]
- *      summary: Get all dishes_ordered
- *      description: Get all dishes_ordered
+ *      tags: [Dishes_order]
+ *      summary: Get all dishes_order
+ *      description: Get all dishes_order
  *      responses:
  *        200:
- *          description: Dishes_ordered list successfully received
+ *          description: Dishes_order list successfully received
  *          content:
  *            application/json:
  *              schema:
  *                type: array
  *                items:
- *                  $ref: "#/components/schemas/Dishes_ordered"
+ *                  $ref: "#/components/schemas/Dishes_order"
  *        401:
  *          $ref: "#/components/responses/UnauthorizedError"
  *        404:
@@ -305,7 +305,7 @@ router.get(
   wrapAsync(async (req, res) => {
     const filetype = req.query.filetype;
 
-    const payload = await Dishes_orderedDBApi.findAll(req.query);
+    const payload = await Dishes_orderDBApi.findAll(req.query);
     if (filetype && filetype === 'csv') {
       const fields = ['id', 'quantity'];
       const opts = { fields };
@@ -324,22 +324,22 @@ router.get(
 
 /**
  *  @swagger
- *  /api/dishes_ordered/count:
+ *  /api/dishes_order/count:
  *    get:
  *      security:
  *        - bearerAuth: []
- *      tags: [Dishes_ordered]
- *      summary: Count all dishes_ordered
- *      description: Count all dishes_ordered
+ *      tags: [Dishes_order]
+ *      summary: Count all dishes_order
+ *      description: Count all dishes_order
  *      responses:
  *        200:
- *          description: Dishes_ordered count successfully received
+ *          description: Dishes_order count successfully received
  *          content:
  *            application/json:
  *              schema:
  *                type: array
  *                items:
- *                  $ref: "#/components/schemas/Dishes_ordered"
+ *                  $ref: "#/components/schemas/Dishes_order"
  *        401:
  *          $ref: "#/components/responses/UnauthorizedError"
  *        404:
@@ -350,7 +350,7 @@ router.get(
 router.get(
   '/count',
   wrapAsync(async (req, res) => {
-    const payload = await Dishes_orderedDBApi.findAll(
+    const payload = await Dishes_orderDBApi.findAll(
       req.query,
 
       { countOnly: true },
@@ -362,22 +362,22 @@ router.get(
 
 /**
  *  @swagger
- *  /api/dishes_ordered/autocomplete:
+ *  /api/dishes_order/autocomplete:
  *    get:
  *      security:
  *        - bearerAuth: []
- *      tags: [Dishes_ordered]
- *      summary: Find all dishes_ordered that match search criteria
- *      description: Find all dishes_ordered that match search criteria
+ *      tags: [Dishes_order]
+ *      summary: Find all dishes_order that match search criteria
+ *      description: Find all dishes_order that match search criteria
  *      responses:
  *        200:
- *          description: Dishes_ordered list successfully received
+ *          description: Dishes_order list successfully received
  *          content:
  *            application/json:
  *              schema:
  *                type: array
  *                items:
- *                  $ref: "#/components/schemas/Dishes_ordered"
+ *                  $ref: "#/components/schemas/Dishes_order"
  *        401:
  *          $ref: "#/components/responses/UnauthorizedError"
  *        404:
@@ -386,7 +386,7 @@ router.get(
  *          description: Some server error
  */
 router.get('/autocomplete', async (req, res) => {
-  const payload = await Dishes_orderedDBApi.findAllAutocomplete(
+  const payload = await Dishes_orderDBApi.findAllAutocomplete(
     req.query.query,
     req.query.limit,
   );
@@ -396,11 +396,11 @@ router.get('/autocomplete', async (req, res) => {
 
 /**
  * @swagger
- *  /api/dishes_ordered/{id}:
+ *  /api/dishes_order/{id}:
  *    get:
  *      security:
  *        - bearerAuth: []
- *      tags: [Dishes_ordered]
+ *      tags: [Dishes_order]
  *      summary: Get selected item
  *      description: Get selected item
  *      parameters:
@@ -416,7 +416,7 @@ router.get('/autocomplete', async (req, res) => {
  *          content:
  *            application/json:
  *              schema:
- *                $ref: "#/components/schemas/Dishes_ordered"
+ *                $ref: "#/components/schemas/Dishes_order"
  *        400:
  *          description: Invalid ID supplied
  *        401:
@@ -429,7 +429,7 @@ router.get('/autocomplete', async (req, res) => {
 router.get(
   '/:id',
   wrapAsync(async (req, res) => {
-    const payload = await Dishes_orderedDBApi.findBy({ id: req.params.id });
+    const payload = await Dishes_orderDBApi.findBy({ id: req.params.id });
 
     res.status(200).send(payload);
   }),

@@ -107,12 +107,19 @@ module.exports = {
       'clients',
       'dish_ingredients',
       'dishes',
-      'dishes_ordered',
+      'dishes_order',
       'ingredients',
       'orders',
       'sources',
       'roles',
       'permissions',
+      'users',
+      'users',
+      'users',
+      'users',
+      'users',
+      'invalid_table',
+      'users',
       ,
     ];
     await queryInterface.bulkInsert(
@@ -501,83 +508,6 @@ primary key ("roles_permissionsId", "permissionId")
         createdAt,
         updatedAt,
         roles_permissionsId: getId('OperationsDirector'),
-        permissionId: getId('CREATE_DISHES_ORDERED'),
-      },
-
-      {
-        createdAt,
-        updatedAt,
-        roles_permissionsId: getId('OperationsDirector'),
-        permissionId: getId('READ_DISHES_ORDERED'),
-      },
-
-      {
-        createdAt,
-        updatedAt,
-        roles_permissionsId: getId('OperationsDirector'),
-        permissionId: getId('UPDATE_DISHES_ORDERED'),
-      },
-
-      {
-        createdAt,
-        updatedAt,
-        roles_permissionsId: getId('OperationsDirector'),
-        permissionId: getId('DELETE_DISHES_ORDERED'),
-      },
-
-      {
-        createdAt,
-        updatedAt,
-        roles_permissionsId: getId('KitchenSupervisor'),
-        permissionId: getId('UPDATE_DISHES_ORDERED'),
-      },
-
-      {
-        createdAt,
-        updatedAt,
-        roles_permissionsId: getId('OrderCoordinator'),
-        permissionId: getId('CREATE_DISHES_ORDERED'),
-      },
-
-      {
-        createdAt,
-        updatedAt,
-        roles_permissionsId: getId('OrderCoordinator'),
-        permissionId: getId('READ_DISHES_ORDERED'),
-      },
-
-      {
-        createdAt,
-        updatedAt,
-        roles_permissionsId: getId('OrderCoordinator'),
-        permissionId: getId('UPDATE_DISHES_ORDERED'),
-      },
-
-      {
-        createdAt,
-        updatedAt,
-        roles_permissionsId: getId('OrderCoordinator'),
-        permissionId: getId('DELETE_DISHES_ORDERED'),
-      },
-
-      {
-        createdAt,
-        updatedAt,
-        roles_permissionsId: getId('InventorySpecialist'),
-        permissionId: getId('UPDATE_DISHES_ORDERED'),
-      },
-
-      {
-        createdAt,
-        updatedAt,
-        roles_permissionsId: getId('CustomerSupport'),
-        permissionId: getId('UPDATE_DISHES_ORDERED'),
-      },
-
-      {
-        createdAt,
-        updatedAt,
-        roles_permissionsId: getId('OperationsDirector'),
         permissionId: getId('CREATE_INGREDIENTS'),
       },
 
@@ -817,6 +747,342 @@ primary key ("roles_permissionsId", "permissionId")
         updatedAt,
         roles_permissionsId: getId('CustomerSupport'),
         permissionId: getId('UPDATE_SOURCES'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('CREATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('READ_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('DELETE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('KitchenSupervisor'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OrderCoordinator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('InventorySpecialist'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('CustomerSupport'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('CREATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('READ_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('DELETE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('KitchenSupervisor'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OrderCoordinator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('InventorySpecialist'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('CustomerSupport'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('CREATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('READ_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('DELETE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('KitchenSupervisor'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OrderCoordinator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('InventorySpecialist'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('CustomerSupport'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('CREATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('READ_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('DELETE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('KitchenSupervisor'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OrderCoordinator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('InventorySpecialist'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('CustomerSupport'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('CREATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('READ_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('DELETE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('KitchenSupervisor'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OrderCoordinator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('InventorySpecialist'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('CustomerSupport'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('CREATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('READ_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OperationsDirector'),
+        permissionId: getId('DELETE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('KitchenSupervisor'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('OrderCoordinator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('InventorySpecialist'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('CustomerSupport'),
+        permissionId: getId('UPDATE_USERS'),
       },
 
       {
@@ -983,25 +1249,25 @@ primary key ("roles_permissionsId", "permissionId")
         createdAt,
         updatedAt,
         roles_permissionsId: getId('Administrator'),
-        permissionId: getId('CREATE_DISHES_ORDERED'),
+        permissionId: getId('CREATE_DISHES_ORDER'),
       },
       {
         createdAt,
         updatedAt,
         roles_permissionsId: getId('Administrator'),
-        permissionId: getId('READ_DISHES_ORDERED'),
+        permissionId: getId('READ_DISHES_ORDER'),
       },
       {
         createdAt,
         updatedAt,
         roles_permissionsId: getId('Administrator'),
-        permissionId: getId('UPDATE_DISHES_ORDERED'),
+        permissionId: getId('UPDATE_DISHES_ORDER'),
       },
       {
         createdAt,
         updatedAt,
         roles_permissionsId: getId('Administrator'),
-        permissionId: getId('DELETE_DISHES_ORDERED'),
+        permissionId: getId('DELETE_DISHES_ORDER'),
       },
 
       {
@@ -1127,6 +1393,181 @@ primary key ("roles_permissionsId", "permissionId")
         updatedAt,
         roles_permissionsId: getId('Administrator'),
         permissionId: getId('DELETE_PERMISSIONS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('CREATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('READ_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('DELETE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('CREATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('READ_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('DELETE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('CREATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('READ_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('DELETE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('CREATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('READ_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('DELETE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('CREATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('READ_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('DELETE_USERS'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('CREATE_INVALID_TABLE'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('READ_INVALID_TABLE'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('UPDATE_INVALID_TABLE'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('DELETE_INVALID_TABLE'),
+      },
+
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('CREATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('READ_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('UPDATE_USERS'),
+      },
+      {
+        createdAt,
+        updatedAt,
+        roles_permissionsId: getId('Administrator'),
+        permissionId: getId('DELETE_USERS'),
       },
 
       {

@@ -52,13 +52,25 @@ module.exports = class SearchService {
         ingredients: ['name'],
 
         sources: ['source_name'],
+
+        users: ['firstName', 'lastName', 'phoneNumber', 'email'],
+
+        users: ['firstName', 'lastName', 'phoneNumber', 'email'],
+
+        users: ['firstName', 'lastName', 'phoneNumber', 'email'],
+
+        users: ['firstName', 'lastName', 'phoneNumber', 'email'],
+
+        users: ['firstName', 'lastName', 'phoneNumber', 'email'],
+
+        users: ['firstName', 'lastName', 'phoneNumber', 'email'],
       };
       const columnsInt = {
         dish_ingredients: ['quantity'],
 
         dishes: ['price'],
 
-        dishes_ordered: ['quantity'],
+        dishes_order: ['quantity'],
       };
 
       let allFoundRecords = [];

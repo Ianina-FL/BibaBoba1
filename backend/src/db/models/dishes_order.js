@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 const moment = require('moment');
 
 module.exports = function (sequelize, DataTypes) {
-  const dishes_ordered = sequelize.define(
-    'dishes_ordered',
+  const dishes_order = sequelize.define(
+    'dishes_order',
     {
       id: {
         type: DataTypes.UUID,
@@ -31,12 +31,12 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  dishes_ordered.associate = (db) => {
+  dishes_order.associate = (db) => {
     /// loop through entities and it's fields, and if ref === current e[name] and create relation has many on parent entity
 
     //end loop
 
-    db.dishes_ordered.belongsTo(db.orders, {
+    db.dishes_order.belongsTo(db.orders, {
       as: 'order',
       foreignKey: {
         name: 'orderId',
@@ -44,7 +44,7 @@ module.exports = function (sequelize, DataTypes) {
       constraints: false,
     });
 
-    db.dishes_ordered.belongsTo(db.dishes, {
+    db.dishes_order.belongsTo(db.dishes, {
       as: 'dish',
       foreignKey: {
         name: 'dishId',
@@ -52,14 +52,14 @@ module.exports = function (sequelize, DataTypes) {
       constraints: false,
     });
 
-    db.dishes_ordered.belongsTo(db.users, {
+    db.dishes_order.belongsTo(db.users, {
       as: 'createdBy',
     });
 
-    db.dishes_ordered.belongsTo(db.users, {
+    db.dishes_order.belongsTo(db.users, {
       as: 'updatedBy',
     });
   };
 
-  return dishes_ordered;
+  return dishes_order;
 };

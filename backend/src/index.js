@@ -28,7 +28,7 @@ const dish_ingredientsRoutes = require('./routes/dish_ingredients');
 
 const dishesRoutes = require('./routes/dishes');
 
-const dishes_orderedRoutes = require('./routes/dishes_ordered');
+const dishes_orderRoutes = require('./routes/dishes_order');
 
 const ingredientsRoutes = require('./routes/ingredients');
 
@@ -39,6 +39,20 @@ const sourcesRoutes = require('./routes/sources');
 const rolesRoutes = require('./routes/roles');
 
 const permissionsRoutes = require('./routes/permissions');
+
+const usersRoutes = require('./routes/users');
+
+const usersRoutes = require('./routes/users');
+
+const usersRoutes = require('./routes/users');
+
+const usersRoutes = require('./routes/users');
+
+const usersRoutes = require('./routes/users');
+
+const invalid_tableRoutes = require('./routes/invalid_table');
+
+const usersRoutes = require('./routes/users');
 
 const options = {
   definition: {
@@ -130,9 +144,9 @@ app.use(
 );
 
 app.use(
-  '/api/dishes_ordered',
+  '/api/dishes_order',
   passport.authenticate('jwt', { session: false }),
-  dishes_orderedRoutes,
+  dishes_orderRoutes,
 );
 
 app.use(
@@ -163,6 +177,48 @@ app.use(
   '/api/permissions',
   passport.authenticate('jwt', { session: false }),
   permissionsRoutes,
+);
+
+app.use(
+  '/api/users',
+  passport.authenticate('jwt', { session: false }),
+  usersRoutes,
+);
+
+app.use(
+  '/api/users',
+  passport.authenticate('jwt', { session: false }),
+  usersRoutes,
+);
+
+app.use(
+  '/api/users',
+  passport.authenticate('jwt', { session: false }),
+  usersRoutes,
+);
+
+app.use(
+  '/api/users',
+  passport.authenticate('jwt', { session: false }),
+  usersRoutes,
+);
+
+app.use(
+  '/api/users',
+  passport.authenticate('jwt', { session: false }),
+  usersRoutes,
+);
+
+app.use(
+  '/api/invalid_table',
+  passport.authenticate('jwt', { session: false }),
+  invalid_tableRoutes,
+);
+
+app.use(
+  '/api/users',
+  passport.authenticate('jwt', { session: false }),
+  usersRoutes,
 );
 
 app.use(

@@ -26,14 +26,14 @@ import { SelectFieldMany } from '../../components/SelectFieldMany';
 import { SwitchField } from '../../components/SwitchField';
 import { RichTextField } from '../../components/RichTextField';
 
-import { update, fetch } from '../../stores/dishes_ordered/dishes_orderedSlice';
+import { update, fetch } from '../../stores/dishes_order/dishes_orderSlice';
 import { useAppDispatch, useAppSelector } from '../../stores/hooks';
 import { useRouter } from 'next/router';
 import { saveFile } from '../../helpers/fileSaver';
 import dataFormatter from '../../helpers/dataFormatter';
 import ImageField from '../../components/ImageField';
 
-const EditDishes_ordered = () => {
+const EditDishes_orderPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const initVals = {
@@ -45,46 +45,46 @@ const EditDishes_ordered = () => {
   };
   const [initialValues, setInitialValues] = useState(initVals);
 
-  const { dishes_ordered } = useAppSelector((state) => state.dishes_ordered);
+  const { dishes_order } = useAppSelector((state) => state.dishes_order);
 
-  const { dishes_orderedId } = router.query;
-
-  useEffect(() => {
-    dispatch(fetch({ id: dishes_orderedId }));
-  }, [dishes_orderedId]);
+  const { id } = router.query;
 
   useEffect(() => {
-    if (typeof dishes_ordered === 'object') {
-      setInitialValues(dishes_ordered);
+    dispatch(fetch({ id: id }));
+  }, [id]);
+
+  useEffect(() => {
+    if (typeof dishes_order === 'object') {
+      setInitialValues(dishes_order);
     }
-  }, [dishes_ordered]);
+  }, [dishes_order]);
 
   useEffect(() => {
-    if (typeof dishes_ordered === 'object') {
+    if (typeof dishes_order === 'object') {
       const newInitialVal = { ...initVals };
 
       Object.keys(initVals).forEach(
-        (el) => (newInitialVal[el] = dishes_ordered[el] || ''),
+        (el) => (newInitialVal[el] = dishes_order[el] || ''),
       );
 
       setInitialValues(newInitialVal);
     }
-  }, [dishes_ordered]);
+  }, [dishes_order]);
 
   const handleSubmit = async (data) => {
-    await dispatch(update({ id: dishes_orderedId, data }));
-    await router.push('/dishes_ordered/dishes_ordered-list');
+    await dispatch(update({ id: id, data }));
+    await router.push('/dishes_order/dishes_order-list');
   };
 
   return (
     <>
       <Head>
-        <title>{getPageTitle('Edit dishes_ordered')}</title>
+        <title>{getPageTitle('Edit dishes_order')}</title>
       </Head>
       <SectionMain>
         <SectionTitleLineWithButton
           icon={mdiChartTimelineVariant}
-          title={'Edit dishes_ordered'}
+          title={'Edit dishes_order'}
           main
         >
           {''}
@@ -131,9 +131,7 @@ const EditDishes_ordered = () => {
                   color='danger'
                   outline
                   label='Cancel'
-                  onClick={() =>
-                    router.push('/dishes_ordered/dishes_ordered-list')
-                  }
+                  onClick={() => router.push('/dishes_order/dishes_order-list')}
                 />
               </BaseButtons>
             </Form>
@@ -144,12 +142,12 @@ const EditDishes_ordered = () => {
   );
 };
 
-EditDishes_ordered.getLayout = function getLayout(page: ReactElement) {
+EditDishes_orderPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <LayoutAuthenticated permission={'UPDATE_DISHES_ORDERED'}>
+    <LayoutAuthenticated permission={'UPDATE_DISHES_ORDER'}>
       {page}
     </LayoutAuthenticated>
   );
 };
 
-export default EditDishes_ordered;
+export default EditDishes_orderPage;

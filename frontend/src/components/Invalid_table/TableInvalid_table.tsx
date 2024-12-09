@@ -11,21 +11,19 @@ import {
   deleteItem,
   setRefetch,
   deleteItemsByIds,
-} from '../../stores/dishes_ordered/dishes_orderedSlice';
+} from '../../stores/invalid_table/invalid_tableSlice';
 import { useAppDispatch, useAppSelector } from '../../stores/hooks';
 import { useRouter } from 'next/router';
 import { Field, Form, Formik } from 'formik';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { loadColumns } from './configureDishes_orderedCols';
+import { loadColumns } from './configureInvalid_tableCols';
 import _ from 'lodash';
 import dataFormatter from '../../helpers/dataFormatter';
 import { dataGridStyles } from '../../styles';
 
-import ListDishes_ordered from './ListDishes_ordered';
-
 const perPage = 10;
 
-const TableSampleDishes_ordered = ({
+const TableSampleInvalid_table = ({
   filterItems,
   setFilterItems,
   filters,
@@ -48,12 +46,12 @@ const TableSampleDishes_ordered = ({
     },
   ]);
   const {
-    dishes_ordered,
+    invalid_table,
     loading,
     count,
-    notify: dishes_orderedNotify,
+    notify: invalid_tableNotify,
     refetch,
-  } = useAppSelector((state) => state.dishes_ordered);
+  } = useAppSelector((state) => state.invalid_table);
   const { currentUser } = useAppSelector((state) => state.auth);
   const focusRing = useAppSelector((state) => state.style.focusRingColor);
   const bgColor = useAppSelector((state) => state.style.bgLayoutColor);
@@ -75,13 +73,13 @@ const TableSampleDishes_ordered = ({
   };
 
   useEffect(() => {
-    if (dishes_orderedNotify.showNotification) {
+    if (invalid_tableNotify.showNotification) {
       notify(
-        dishes_orderedNotify.typeNotification,
-        dishes_orderedNotify.textNotification,
+        invalid_tableNotify.typeNotification,
+        invalid_tableNotify.textNotification,
       );
     }
-  }, [dishes_orderedNotify.showNotification]);
+  }, [invalid_tableNotify.showNotification]);
 
   useEffect(() => {
     if (!currentUser) return;
@@ -104,11 +102,11 @@ const TableSampleDishes_ordered = ({
   };
 
   const handleEditAction = (id: string) => {
-    router.push(`/dishes_ordered/${id}`);
+    router.push(`/invalid_table/${id}`);
   };
 
   const handleViewAction = (id: string) => {
-    router.push(`/dishes_ordered/dishes_ordered-view/?id=${id}`);
+    router.push(`/invalid_table/invalid_table-view/?id=${id}`);
   };
 
   const handleDeleteModalAction = (id: string) => {
@@ -182,7 +180,7 @@ const TableSampleDishes_ordered = ({
       handleDeleteModalAction,
       handleViewAction,
       handleEditAction,
-      `dishes_ordered`,
+      `invalid_table`,
       currentUser,
     ).then((newCols) => setColumns(newCols));
   }, [currentUser]);
@@ -216,7 +214,7 @@ const TableSampleDishes_ordered = ({
         sx={dataGridStyles}
         className={'datagrid--table'}
         getRowClassName={() => `datagrid--row`}
-        rows={dishes_ordered ?? []}
+        rows={invalid_table ?? []}
         columns={columns}
         initialState={{
           pagination: {
@@ -427,20 +425,7 @@ const TableSampleDishes_ordered = ({
         <p>Are you sure you want to delete this item?</p>
       </CardBoxModal>
 
-      {dishes_ordered && Array.isArray(dishes_ordered) && !showGrid && (
-        <ListDishes_ordered
-          dishes_ordered={dishes_ordered}
-          loading={loading}
-          onView={handleViewAction}
-          onEdit={handleEditAction}
-          onDelete={handleDeleteModalAction}
-          currentPage={currentPage}
-          numPages={numPages}
-          onPageChange={onPageChange}
-        />
-      )}
-
-      {showGrid && dataGrid}
+      {dataGrid}
 
       {selectedRows.length > 0 &&
         createPortal(
@@ -458,4 +443,4 @@ const TableSampleDishes_ordered = ({
   );
 };
 
-export default TableSampleDishes_ordered;
+export default TableSampleInvalid_table;

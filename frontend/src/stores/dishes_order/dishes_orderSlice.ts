@@ -7,7 +7,7 @@ import {
 } from '../../helpers/notifyStateHandler';
 
 interface MainState {
-  dishes_ordered: any;
+  dishes_order: any;
   loading: boolean;
   count: number;
   refetch: boolean;
@@ -20,7 +20,7 @@ interface MainState {
 }
 
 const initialState: MainState = {
-  dishes_ordered: [],
+  dishes_order: [],
   loading: false,
   count: 0,
   refetch: false,
@@ -33,11 +33,11 @@ const initialState: MainState = {
 };
 
 export const fetch = createAsyncThunk(
-  'dishes_ordered/fetch',
+  'dishes_order/fetch',
   async (data: any) => {
     const { id, query } = data;
     const result = await axios.get(
-      `dishes_ordered${query || (id ? `/${id}` : '')}`,
+      `dishes_order${query || (id ? `/${id}` : '')}`,
     );
     return id
       ? result.data
@@ -46,10 +46,10 @@ export const fetch = createAsyncThunk(
 );
 
 export const deleteItemsByIds = createAsyncThunk(
-  'dishes_ordered/deleteByIds',
+  'dishes_order/deleteByIds',
   async (data: any, { rejectWithValue }) => {
     try {
-      await axios.post('dishes_ordered/deleteByIds', { data });
+      await axios.post('dishes_order/deleteByIds', { data });
     } catch (error) {
       if (!error.response) {
         throw error;
@@ -61,10 +61,10 @@ export const deleteItemsByIds = createAsyncThunk(
 );
 
 export const deleteItem = createAsyncThunk(
-  'dishes_ordered/deleteDishes_ordered',
+  'dishes_order/deleteDishes_order',
   async (id: string, { rejectWithValue }) => {
     try {
-      await axios.delete(`dishes_ordered/${id}`);
+      await axios.delete(`dishes_order/${id}`);
     } catch (error) {
       if (!error.response) {
         throw error;
@@ -76,10 +76,10 @@ export const deleteItem = createAsyncThunk(
 );
 
 export const create = createAsyncThunk(
-  'dishes_ordered/createDishes_ordered',
+  'dishes_order/createDishes_order',
   async (data: any, { rejectWithValue }) => {
     try {
-      const result = await axios.post('dishes_ordered', { data });
+      const result = await axios.post('dishes_order', { data });
       return result.data;
     } catch (error) {
       if (!error.response) {
@@ -92,14 +92,14 @@ export const create = createAsyncThunk(
 );
 
 export const uploadCsv = createAsyncThunk(
-  'dishes_ordered/uploadCsv',
+  'dishes_order/uploadCsv',
   async (file: File, { rejectWithValue }) => {
     try {
       const data = new FormData();
       data.append('file', file);
       data.append('filename', file.name);
 
-      const result = await axios.post('dishes_ordered/bulk-import', data, {
+      const result = await axios.post('dishes_order/bulk-import', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -117,10 +117,10 @@ export const uploadCsv = createAsyncThunk(
 );
 
 export const update = createAsyncThunk(
-  'dishes_ordered/updateDishes_ordered',
+  'dishes_order/updateDishes_order',
   async (payload: any, { rejectWithValue }) => {
     try {
-      const result = await axios.put(`dishes_ordered/${payload.id}`, {
+      const result = await axios.put(`dishes_order/${payload.id}`, {
         id: payload.id,
         data: payload.data,
       });
@@ -135,8 +135,8 @@ export const update = createAsyncThunk(
   },
 );
 
-export const dishes_orderedSlice = createSlice({
-  name: 'dishes_ordered',
+export const dishes_orderSlice = createSlice({
+  name: 'dishes_order',
   initialState,
   reducers: {
     setRefetch: (state, action: PayloadAction<boolean>) => {
@@ -155,10 +155,10 @@ export const dishes_orderedSlice = createSlice({
 
     builder.addCase(fetch.fulfilled, (state, action) => {
       if (action.payload.rows && action.payload.count >= 0) {
-        state.dishes_ordered = action.payload.rows;
+        state.dishes_order = action.payload.rows;
         state.count = action.payload.count;
       } else {
-        state.dishes_ordered = action.payload;
+        state.dishes_order = action.payload;
       }
       state.loading = false;
     });
@@ -170,7 +170,7 @@ export const dishes_orderedSlice = createSlice({
 
     builder.addCase(deleteItemsByIds.fulfilled, (state) => {
       state.loading = false;
-      fulfilledNotify(state, 'Dishes_ordered has been deleted');
+      fulfilledNotify(state, 'Dishes_order has been deleted');
     });
 
     builder.addCase(deleteItemsByIds.rejected, (state, action) => {
@@ -185,10 +185,7 @@ export const dishes_orderedSlice = createSlice({
 
     builder.addCase(deleteItem.fulfilled, (state) => {
       state.loading = false;
-      fulfilledNotify(
-        state,
-        `${'Dishes_ordered'.slice(0, -1)} has been deleted`,
-      );
+      fulfilledNotify(state, `${'Dishes_order'.slice(0, -1)} has been deleted`);
     });
 
     builder.addCase(deleteItem.rejected, (state, action) => {
@@ -207,10 +204,7 @@ export const dishes_orderedSlice = createSlice({
 
     builder.addCase(create.fulfilled, (state) => {
       state.loading = false;
-      fulfilledNotify(
-        state,
-        `${'Dishes_ordered'.slice(0, -1)} has been created`,
-      );
+      fulfilledNotify(state, `${'Dishes_order'.slice(0, -1)} has been created`);
     });
 
     builder.addCase(update.pending, (state) => {
@@ -219,10 +213,7 @@ export const dishes_orderedSlice = createSlice({
     });
     builder.addCase(update.fulfilled, (state) => {
       state.loading = false;
-      fulfilledNotify(
-        state,
-        `${'Dishes_ordered'.slice(0, -1)} has been updated`,
-      );
+      fulfilledNotify(state, `${'Dishes_order'.slice(0, -1)} has been updated`);
     });
     builder.addCase(update.rejected, (state, action) => {
       state.loading = false;
@@ -235,7 +226,7 @@ export const dishes_orderedSlice = createSlice({
     });
     builder.addCase(uploadCsv.fulfilled, (state) => {
       state.loading = false;
-      fulfilledNotify(state, 'Dishes_ordered has been uploaded');
+      fulfilledNotify(state, 'Dishes_order has been uploaded');
     });
     builder.addCase(uploadCsv.rejected, (state, action) => {
       state.loading = false;
@@ -245,6 +236,6 @@ export const dishes_orderedSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setRefetch } = dishes_orderedSlice.actions;
+export const { setRefetch } = dishes_orderSlice.actions;
 
-export default dishes_orderedSlice.reducer;
+export default dishes_orderSlice.reducer;

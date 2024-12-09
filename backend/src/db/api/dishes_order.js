@@ -6,12 +6,12 @@ const Utils = require('../utils');
 const Sequelize = db.Sequelize;
 const Op = Sequelize.Op;
 
-module.exports = class Dishes_orderedDBApi {
+module.exports = class Dishes_orderDBApi {
   static async create(data, options) {
     const currentUser = (options && options.currentUser) || { id: null };
     const transaction = (options && options.transaction) || undefined;
 
-    const dishes_ordered = await db.dishes_ordered.create(
+    const dishes_order = await db.dishes_order.create(
       {
         id: data.id || undefined,
 
@@ -23,15 +23,15 @@ module.exports = class Dishes_orderedDBApi {
       { transaction },
     );
 
-    await dishes_ordered.setOrder(data.order || null, {
+    await dishes_order.setOrder(data.order || null, {
       transaction,
     });
 
-    await dishes_ordered.setDish(data.dish || null, {
+    await dishes_order.setDish(data.dish || null, {
       transaction,
     });
 
-    return dishes_ordered;
+    return dishes_order;
   }
 
   static async bulkImport(data, options) {
@@ -39,7 +39,7 @@ module.exports = class Dishes_orderedDBApi {
     const transaction = (options && options.transaction) || undefined;
 
     // Prepare data - wrapping individual data transformations in a map() method
-    const dishes_orderedData = data.map((item, index) => ({
+    const dishes_orderData = data.map((item, index) => ({
       id: item.id || undefined,
 
       quantity: item.quantity || null,
@@ -50,27 +50,26 @@ module.exports = class Dishes_orderedDBApi {
     }));
 
     // Bulk create items
-    const dishes_ordered = await db.dishes_ordered.bulkCreate(
-      dishes_orderedData,
-      { transaction },
-    );
+    const dishes_order = await db.dishes_order.bulkCreate(dishes_orderData, {
+      transaction,
+    });
 
     // For each item created, replace relation files
 
-    return dishes_ordered;
+    return dishes_order;
   }
 
   static async update(id, data, options) {
     const currentUser = (options && options.currentUser) || { id: null };
     const transaction = (options && options.transaction) || undefined;
 
-    const dishes_ordered = await db.dishes_ordered.findByPk(
+    const dishes_order = await db.dishes_order.findByPk(
       id,
       {},
       { transaction },
     );
 
-    await dishes_ordered.update(
+    await dishes_order.update(
       {
         quantity: data.quantity || null,
         updatedById: currentUser.id,
@@ -78,22 +77,22 @@ module.exports = class Dishes_orderedDBApi {
       { transaction },
     );
 
-    await dishes_ordered.setOrder(data.order || null, {
+    await dishes_order.setOrder(data.order || null, {
       transaction,
     });
 
-    await dishes_ordered.setDish(data.dish || null, {
+    await dishes_order.setDish(data.dish || null, {
       transaction,
     });
 
-    return dishes_ordered;
+    return dishes_order;
   }
 
   static async deleteByIds(ids, options) {
     const currentUser = (options && options.currentUser) || { id: null };
     const transaction = (options && options.transaction) || undefined;
 
-    const dishes_ordered = await db.dishes_ordered.findAll({
+    const dishes_order = await db.dishes_order.findAll({
       where: {
         id: {
           [Op.in]: ids,
@@ -103,24 +102,24 @@ module.exports = class Dishes_orderedDBApi {
     });
 
     await db.sequelize.transaction(async (transaction) => {
-      for (const record of dishes_ordered) {
+      for (const record of dishes_order) {
         await record.update({ deletedBy: currentUser.id }, { transaction });
       }
-      for (const record of dishes_ordered) {
+      for (const record of dishes_order) {
         await record.destroy({ transaction });
       }
     });
 
-    return dishes_ordered;
+    return dishes_order;
   }
 
   static async remove(id, options) {
     const currentUser = (options && options.currentUser) || { id: null };
     const transaction = (options && options.transaction) || undefined;
 
-    const dishes_ordered = await db.dishes_ordered.findByPk(id, options);
+    const dishes_order = await db.dishes_order.findByPk(id, options);
 
-    await dishes_ordered.update(
+    await dishes_order.update(
       {
         deletedBy: currentUser.id,
       },
@@ -129,32 +128,32 @@ module.exports = class Dishes_orderedDBApi {
       },
     );
 
-    await dishes_ordered.destroy({
+    await dishes_order.destroy({
       transaction,
     });
 
-    return dishes_ordered;
+    return dishes_order;
   }
 
   static async findBy(where, options) {
     const transaction = (options && options.transaction) || undefined;
 
-    const dishes_ordered = await db.dishes_ordered.findOne(
+    const dishes_order = await db.dishes_order.findOne(
       { where },
       { transaction },
     );
 
-    if (!dishes_ordered) {
-      return dishes_ordered;
+    if (!dishes_order) {
+      return dishes_order;
     }
 
-    const output = dishes_ordered.get({ plain: true });
+    const output = dishes_order.get({ plain: true });
 
-    output.order = await dishes_ordered.getOrder({
+    output.order = await dishes_order.getOrder({
       transaction,
     });
 
-    output.dish = await dishes_ordered.getDish({
+    output.dish = await dishes_order.getDish({
       transaction,
     });
 
@@ -278,7 +277,7 @@ module.exports = class Dishes_orderedDBApi {
     let { rows, count } = options?.countOnly
       ? {
           rows: [],
-          count: await db.dishes_ordered.count({
+          count: await db.dishes_order.count({
             where,
             include,
             distinct: true,
@@ -291,7 +290,7 @@ module.exports = class Dishes_orderedDBApi {
             transaction,
           }),
         }
-      : await db.dishes_ordered.findAndCountAll({
+      : await db.dishes_order.findAndCountAll({
           where,
           include,
           distinct: true,
@@ -319,12 +318,12 @@ module.exports = class Dishes_orderedDBApi {
       where = {
         [Op.or]: [
           { ['id']: Utils.uuid(query) },
-          Utils.ilike('dishes_ordered', 'order', query),
+          Utils.ilike('dishes_order', 'order', query),
         ],
       };
     }
 
-    const records = await db.dishes_ordered.findAll({
+    const records = await db.dishes_order.findAll({
       attributes: ['id', 'order'],
       where,
       limit: limit ? Number(limit) : undefined,
