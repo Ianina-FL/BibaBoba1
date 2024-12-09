@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
 import { useAppDispatch, useAppSelector } from '../../stores/hooks';
 import { useRouter } from 'next/router';
-import { fetch } from '../../stores/dishes_ordered/dishes_orderedSlice';
+import { fetch } from '../../stores/dishes_order/dishes_orderSlice';
 import { saveFile } from '../../helpers/fileSaver';
 import dataFormatter from '../../helpers/dataFormatter';
 import ImageField from '../../components/ImageField';
@@ -21,10 +21,10 @@ import { mdiChartTimelineVariant } from '@mdi/js';
 import { SwitchField } from '../../components/SwitchField';
 import FormField from '../../components/FormField';
 
-const Dishes_orderedView = () => {
+const Dishes_orderView = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { dishes_ordered } = useAppSelector((state) => state.dishes_ordered);
+  const { dishes_order } = useAppSelector((state) => state.dishes_order);
 
   const { id } = router.query;
 
@@ -40,12 +40,12 @@ const Dishes_orderedView = () => {
   return (
     <>
       <Head>
-        <title>{getPageTitle('View dishes_ordered')}</title>
+        <title>{getPageTitle('View dishes_order')}</title>
       </Head>
       <SectionMain>
         <SectionTitleLineWithButton
           icon={mdiChartTimelineVariant}
-          title={removeLastCharacter('View dishes_ordered')}
+          title={removeLastCharacter('View dishes_order')}
           main
         >
           {''}
@@ -54,18 +54,18 @@ const Dishes_orderedView = () => {
           <div className={'mb-4'}>
             <p className={'block font-bold mb-2'}>Order</p>
 
-            <p>{dishes_ordered?.order?.order_received ?? 'No data'}</p>
+            <p>{dishes_order?.order?.order_received ?? 'No data'}</p>
           </div>
 
           <div className={'mb-4'}>
             <p className={'block font-bold mb-2'}>Dish</p>
 
-            <p>{dishes_ordered?.dish?.name ?? 'No data'}</p>
+            <p>{dishes_order?.dish?.name ?? 'No data'}</p>
           </div>
 
           <div className={'mb-4'}>
             <p className={'block font-bold mb-2'}>Quantity</p>
-            <p>{dishes_ordered?.quantity || 'No data'}</p>
+            <p>{dishes_order?.quantity || 'No data'}</p>
           </div>
 
           <BaseDivider />
@@ -73,7 +73,7 @@ const Dishes_orderedView = () => {
           <BaseButton
             color='info'
             label='Back'
-            onClick={() => router.push('/dishes_ordered/dishes_ordered-list')}
+            onClick={() => router.push('/dishes_order/dishes_order-list')}
           />
         </CardBox>
       </SectionMain>
@@ -81,12 +81,12 @@ const Dishes_orderedView = () => {
   );
 };
 
-Dishes_orderedView.getLayout = function getLayout(page: ReactElement) {
+Dishes_orderView.getLayout = function getLayout(page: ReactElement) {
   return (
-    <LayoutAuthenticated permission={'READ_DISHES_ORDERED'}>
+    <LayoutAuthenticated permission={'READ_DISHES_ORDER'}>
       {page}
     </LayoutAuthenticated>
   );
 };
 
-export default Dishes_orderedView;
+export default Dishes_orderView;

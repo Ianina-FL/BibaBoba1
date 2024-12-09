@@ -7,7 +7,7 @@ import LayoutAuthenticated from '../../layouts/Authenticated';
 import SectionMain from '../../components/SectionMain';
 import SectionTitleLineWithButton from '../../components/SectionTitleLineWithButton';
 import { getPageTitle } from '../../config';
-import TableDishes_ordered from '../../components/Dishes_ordered/TableDishes_ordered';
+import TableInvalid_table from '../../components/Invalid_table/TableInvalid_table';
 import BaseButton from '../../components/BaseButton';
 import axios from 'axios';
 import Link from 'next/link';
@@ -17,11 +17,11 @@ import DragDropFilePicker from '../../components/DragDropFilePicker';
 import {
   setRefetch,
   uploadCsv,
-} from '../../stores/dishes_ordered/dishes_orderedSlice';
+} from '../../stores/invalid_table/invalid_tableSlice';
 
 import { hasPermission } from '../../helpers/userPermissions';
 
-const Dishes_orderedTablesPage = () => {
+const Invalid_tableTablesPage = () => {
   const [filterItems, setFilterItems] = useState([]);
   const [csvFile, setCsvFile] = useState<File | null>(null);
   const [isModalActive, setIsModalActive] = useState(false);
@@ -31,15 +31,10 @@ const Dishes_orderedTablesPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const [filters] = useState([
-    { label: 'Quantity', title: 'quantity', number: 'true' },
-
-    { label: 'Order', title: 'order' },
-    { label: 'Dish', title: 'dish' },
-  ]);
+  const [filters] = useState([]);
 
   const hasCreatePermission =
-    currentUser && hasPermission(currentUser, 'CREATE_DISHES_ORDERED');
+    currentUser && hasPermission(currentUser, 'CREATE_INVALID_TABLE');
 
   const addFilter = () => {
     const newItem = {
@@ -55,9 +50,9 @@ const Dishes_orderedTablesPage = () => {
     setFilterItems([...filterItems, newItem]);
   };
 
-  const getDishes_orderedCSV = async () => {
+  const getInvalid_tableCSV = async () => {
     const response = await axios({
-      url: '/dishes_ordered?filetype=csv',
+      url: '/invalid_table?filetype=csv',
       method: 'GET',
       responseType: 'blob',
     });
@@ -65,7 +60,7 @@ const Dishes_orderedTablesPage = () => {
     const blob = new Blob([response.data], { type: type });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.download = 'dishes_orderedCSV.csv';
+    link.download = 'invalid_tableCSV.csv';
     link.click();
   };
 
@@ -85,12 +80,12 @@ const Dishes_orderedTablesPage = () => {
   return (
     <>
       <Head>
-        <title>{getPageTitle('Dishes_ordered')}</title>
+        <title>{getPageTitle('Invalid_table')}</title>
       </Head>
       <SectionMain>
         <SectionTitleLineWithButton
           icon={mdiChartTimelineVariant}
-          title='Dishes_ordered'
+          title='Invalid_table'
           main
         >
           {''}
@@ -99,7 +94,7 @@ const Dishes_orderedTablesPage = () => {
           {hasCreatePermission && (
             <BaseButton
               className={'mr-3'}
-              href={'/dishes_ordered/dishes_ordered-new'}
+              href={'/invalid_table/invalid_table-new'}
               color='info'
               label='New Item'
             />
@@ -115,7 +110,7 @@ const Dishes_orderedTablesPage = () => {
             className={'mr-3'}
             color='info'
             label='Download CSV'
-            onClick={getDishes_orderedCSV}
+            onClick={getInvalid_tableCSV}
           />
 
           {hasCreatePermission && (
@@ -129,19 +124,13 @@ const Dishes_orderedTablesPage = () => {
           <div className='md:inline-flex items-center ms-auto'>
             <div id='delete-rows-button'></div>
           </div>
-
-          <div className='md:inline-flex items-center ms-auto'>
-            <Link href={'/dishes_ordered/dishes_ordered-table'}>
-              Switch to Table
-            </Link>
-          </div>
         </CardBox>
         <CardBox className='mb-6' hasTable>
-          <TableDishes_ordered
+          <TableInvalid_table
             filterItems={filterItems}
             setFilterItems={setFilterItems}
             filters={filters}
-            showGrid={false}
+            showGrid={true}
           />
         </CardBox>
       </SectionMain>
@@ -164,12 +153,12 @@ const Dishes_orderedTablesPage = () => {
   );
 };
 
-Dishes_orderedTablesPage.getLayout = function getLayout(page: ReactElement) {
+Invalid_tableTablesPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <LayoutAuthenticated permission={'READ_DISHES_ORDERED'}>
+    <LayoutAuthenticated permission={'READ_INVALID_TABLE'}>
       {page}
     </LayoutAuthenticated>
   );
 };
 
-export default Dishes_orderedTablesPage;
+export default Invalid_tableTablesPage;

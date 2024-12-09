@@ -6,19 +6,15 @@ const Utils = require('../utils');
 const Sequelize = db.Sequelize;
 const Op = Sequelize.Op;
 
-module.exports = class DishesDBApi {
+module.exports = class Invalid_tableDBApi {
   static async create(data, options) {
     const currentUser = (options && options.currentUser) || { id: null };
     const transaction = (options && options.transaction) || undefined;
 
-    const dishes = await db.dishes.create(
+    const invalid_table = await db.invalid_table.create(
       {
         id: data.id || undefined,
 
-        name: data.name || null,
-        cutlery: data.cutlery || false,
-
-        price: data.price || null,
         importHash: data.importHash || null,
         createdById: currentUser.id,
         updatedById: currentUser.id,
@@ -26,7 +22,7 @@ module.exports = class DishesDBApi {
       { transaction },
     );
 
-    return dishes;
+    return invalid_table;
   }
 
   static async bulkImport(data, options) {
@@ -34,13 +30,9 @@ module.exports = class DishesDBApi {
     const transaction = (options && options.transaction) || undefined;
 
     // Prepare data - wrapping individual data transformations in a map() method
-    const dishesData = data.map((item, index) => ({
+    const invalid_tableData = data.map((item, index) => ({
       id: item.id || undefined,
 
-      name: item.name || null,
-      cutlery: item.cutlery || false,
-
-      price: item.price || null,
       importHash: item.importHash || null,
       createdById: currentUser.id,
       updatedById: currentUser.id,
@@ -48,38 +40,40 @@ module.exports = class DishesDBApi {
     }));
 
     // Bulk create items
-    const dishes = await db.dishes.bulkCreate(dishesData, { transaction });
+    const invalid_table = await db.invalid_table.bulkCreate(invalid_tableData, {
+      transaction,
+    });
 
     // For each item created, replace relation files
 
-    return dishes;
+    return invalid_table;
   }
 
   static async update(id, data, options) {
     const currentUser = (options && options.currentUser) || { id: null };
     const transaction = (options && options.transaction) || undefined;
 
-    const dishes = await db.dishes.findByPk(id, {}, { transaction });
+    const invalid_table = await db.invalid_table.findByPk(
+      id,
+      {},
+      { transaction },
+    );
 
-    await dishes.update(
+    await invalid_table.update(
       {
-        name: data.name || null,
-        cutlery: data.cutlery || false,
-
-        price: data.price || null,
         updatedById: currentUser.id,
       },
       { transaction },
     );
 
-    return dishes;
+    return invalid_table;
   }
 
   static async deleteByIds(ids, options) {
     const currentUser = (options && options.currentUser) || { id: null };
     const transaction = (options && options.transaction) || undefined;
 
-    const dishes = await db.dishes.findAll({
+    const invalid_table = await db.invalid_table.findAll({
       where: {
         id: {
           [Op.in]: ids,
@@ -89,24 +83,24 @@ module.exports = class DishesDBApi {
     });
 
     await db.sequelize.transaction(async (transaction) => {
-      for (const record of dishes) {
+      for (const record of invalid_table) {
         await record.update({ deletedBy: currentUser.id }, { transaction });
       }
-      for (const record of dishes) {
+      for (const record of invalid_table) {
         await record.destroy({ transaction });
       }
     });
 
-    return dishes;
+    return invalid_table;
   }
 
   static async remove(id, options) {
     const currentUser = (options && options.currentUser) || { id: null };
     const transaction = (options && options.transaction) || undefined;
 
-    const dishes = await db.dishes.findByPk(id, options);
+    const invalid_table = await db.invalid_table.findByPk(id, options);
 
-    await dishes.update(
+    await invalid_table.update(
       {
         deletedBy: currentUser.id,
       },
@@ -115,31 +109,26 @@ module.exports = class DishesDBApi {
       },
     );
 
-    await dishes.destroy({
+    await invalid_table.destroy({
       transaction,
     });
 
-    return dishes;
+    return invalid_table;
   }
 
   static async findBy(where, options) {
     const transaction = (options && options.transaction) || undefined;
 
-    const dishes = await db.dishes.findOne({ where }, { transaction });
+    const invalid_table = await db.invalid_table.findOne(
+      { where },
+      { transaction },
+    );
 
-    if (!dishes) {
-      return dishes;
+    if (!invalid_table) {
+      return invalid_table;
     }
 
-    const output = dishes.get({ plain: true });
-
-    output.dish_ingredients_dish = await dishes.getDish_ingredients_dish({
-      transaction,
-    });
-
-    output.dishes_order_dish = await dishes.getDishes_order_dish({
-      transaction,
-    });
+    const output = invalid_table.get({ plain: true });
 
     return output;
   }
@@ -165,37 +154,6 @@ module.exports = class DishesDBApi {
         };
       }
 
-      if (filter.name) {
-        where = {
-          ...where,
-          [Op.and]: Utils.ilike('dishes', 'name', filter.name),
-        };
-      }
-
-      if (filter.priceRange) {
-        const [start, end] = filter.priceRange;
-
-        if (start !== undefined && start !== null && start !== '') {
-          where = {
-            ...where,
-            price: {
-              ...where.price,
-              [Op.gte]: start,
-            },
-          };
-        }
-
-        if (end !== undefined && end !== null && end !== '') {
-          where = {
-            ...where,
-            price: {
-              ...where.price,
-              [Op.lte]: end,
-            },
-          };
-        }
-      }
-
       if (
         filter.active === true ||
         filter.active === 'true' ||
@@ -205,13 +163,6 @@ module.exports = class DishesDBApi {
         where = {
           ...where,
           active: filter.active === true || filter.active === 'true',
-        };
-      }
-
-      if (filter.cutlery) {
-        where = {
-          ...where,
-          cutlery: filter.cutlery,
         };
       }
 
@@ -243,7 +194,7 @@ module.exports = class DishesDBApi {
     let { rows, count } = options?.countOnly
       ? {
           rows: [],
-          count: await db.dishes.count({
+          count: await db.invalid_table.count({
             where,
             include,
             distinct: true,
@@ -256,7 +207,7 @@ module.exports = class DishesDBApi {
             transaction,
           }),
         }
-      : await db.dishes.findAndCountAll({
+      : await db.invalid_table.findAndCountAll({
           where,
           include,
           distinct: true,
@@ -284,21 +235,21 @@ module.exports = class DishesDBApi {
       where = {
         [Op.or]: [
           { ['id']: Utils.uuid(query) },
-          Utils.ilike('dishes', 'name', query),
+          Utils.ilike('invalid_table', 'id', query),
         ],
       };
     }
 
-    const records = await db.dishes.findAll({
-      attributes: ['id', 'name'],
+    const records = await db.invalid_table.findAll({
+      attributes: ['id', 'id'],
       where,
       limit: limit ? Number(limit) : undefined,
-      orderBy: [['name', 'ASC']],
+      orderBy: [['id', 'ASC']],
     });
 
     return records.map((record) => ({
       id: record.id,
-      label: record.name,
+      label: record.id,
     }));
   }
 };

@@ -1,5 +1,5 @@
 const db = require('../db/models');
-const Dishes_orderedDBApi = require('../db/api/dishes_ordered');
+const Invalid_tableDBApi = require('../db/api/invalid_table');
 const processFile = require('../middlewares/upload');
 const ValidationError = require('./notifications/errors/validation');
 const csv = require('csv-parser');
@@ -7,11 +7,11 @@ const axios = require('axios');
 const config = require('../config');
 const stream = require('stream');
 
-module.exports = class Dishes_orderedService {
+module.exports = class Invalid_tableService {
   static async create(data, currentUser) {
     const transaction = await db.sequelize.transaction();
     try {
-      await Dishes_orderedDBApi.create(data, {
+      await Invalid_tableDBApi.create(data, {
         currentUser,
         transaction,
       });
@@ -44,7 +44,7 @@ module.exports = class Dishes_orderedService {
           .on('error', (error) => reject(error));
       });
 
-      await Dishes_orderedDBApi.bulkImport(results, {
+      await Invalid_tableDBApi.bulkImport(results, {
         transaction,
         ignoreDuplicates: true,
         validate: true,
@@ -61,22 +61,22 @@ module.exports = class Dishes_orderedService {
   static async update(data, id, currentUser) {
     const transaction = await db.sequelize.transaction();
     try {
-      let dishes_ordered = await Dishes_orderedDBApi.findBy(
+      let invalid_table = await Invalid_tableDBApi.findBy(
         { id },
         { transaction },
       );
 
-      if (!dishes_ordered) {
-        throw new ValidationError('dishes_orderedNotFound');
+      if (!invalid_table) {
+        throw new ValidationError('invalid_tableNotFound');
       }
 
-      const updatedDishes_ordered = await Dishes_orderedDBApi.update(id, data, {
+      const updatedInvalid_table = await Invalid_tableDBApi.update(id, data, {
         currentUser,
         transaction,
       });
 
       await transaction.commit();
-      return updatedDishes_ordered;
+      return updatedInvalid_table;
     } catch (error) {
       await transaction.rollback();
       throw error;
@@ -87,7 +87,7 @@ module.exports = class Dishes_orderedService {
     const transaction = await db.sequelize.transaction();
 
     try {
-      await Dishes_orderedDBApi.deleteByIds(ids, {
+      await Invalid_tableDBApi.deleteByIds(ids, {
         currentUser,
         transaction,
       });
@@ -103,7 +103,7 @@ module.exports = class Dishes_orderedService {
     const transaction = await db.sequelize.transaction();
 
     try {
-      await Dishes_orderedDBApi.remove(id, {
+      await Invalid_tableDBApi.remove(id, {
         currentUser,
         transaction,
       });

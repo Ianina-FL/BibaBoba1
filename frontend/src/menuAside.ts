@@ -49,12 +49,12 @@ const menuAside: MenuAsideItem[] = [
     permissions: 'READ_DISHES',
   },
   {
-    href: '/dishes_ordered/dishes_ordered-list',
-    label: 'Dishes ordered',
+    href: '/dishes_order/dishes_order-list',
+    label: 'Dishes order',
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     icon: icon.mdiFoodVariant ? icon.mdiFoodVariant : icon.mdiTable,
-    permissions: 'READ_DISHES_ORDERED',
+    permissions: 'READ_DISHES_ORDER',
   },
   {
     href: '/ingredients/ingredients-list',
@@ -99,6 +99,62 @@ const menuAside: MenuAsideItem[] = [
       ? icon.mdiShieldAccountOutline
       : icon.mdiTable,
     permissions: 'READ_PERMISSIONS',
+  },
+  {
+    href: '/users/users-list',
+    label: 'Users',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    icon: icon.mdiAccountGroup ? icon.mdiAccountGroup : icon.mdiTable,
+    permissions: 'READ_USERS',
+  },
+  {
+    href: '/users/users-list',
+    label: 'Users',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    icon: icon.mdiAccountGroup ? icon.mdiAccountGroup : icon.mdiTable,
+    permissions: 'READ_USERS',
+  },
+  {
+    href: '/users/users-list',
+    label: 'Users',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    icon: icon.mdiAccountGroup ? icon.mdiAccountGroup : icon.mdiTable,
+    permissions: 'READ_USERS',
+  },
+  {
+    href: '/users/users-list',
+    label: 'Users',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    icon: icon.mdiAccountGroup ? icon.mdiAccountGroup : icon.mdiTable,
+    permissions: 'READ_USERS',
+  },
+  {
+    href: '/users/users-list',
+    label: 'Users',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    icon: icon.mdiAccountGroup ? icon.mdiAccountGroup : icon.mdiTable,
+    permissions: 'READ_USERS',
+  },
+  {
+    href: '/invalid_table/invalid_table-list',
+    label: 'Invalid table',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    icon: icon.mdiTable ? icon.mdiTable : icon.mdiTable,
+    permissions: 'READ_INVALID_TABLE',
+  },
+  {
+    href: '/users/users-list',
+    label: 'Users',
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    icon: icon.mdiAccountGroup ? icon.mdiAccountGroup : icon.mdiTable,
+    permissions: 'READ_USERS',
   },
   {
     href: '/profile',

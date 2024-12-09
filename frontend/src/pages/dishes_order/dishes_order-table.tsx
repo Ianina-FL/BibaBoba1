@@ -7,7 +7,7 @@ import LayoutAuthenticated from '../../layouts/Authenticated';
 import SectionMain from '../../components/SectionMain';
 import SectionTitleLineWithButton from '../../components/SectionTitleLineWithButton';
 import { getPageTitle } from '../../config';
-import TableDishes_ordered from '../../components/Dishes_ordered/TableDishes_ordered';
+import TableDishes_order from '../../components/Dishes_order/TableDishes_order';
 import BaseButton from '../../components/BaseButton';
 import axios from 'axios';
 import Link from 'next/link';
@@ -17,11 +17,11 @@ import DragDropFilePicker from '../../components/DragDropFilePicker';
 import {
   setRefetch,
   uploadCsv,
-} from '../../stores/dishes_ordered/dishes_orderedSlice';
+} from '../../stores/dishes_order/dishes_orderSlice';
 
 import { hasPermission } from '../../helpers/userPermissions';
 
-const Dishes_orderedTablesPage = () => {
+const Dishes_orderTablesPage = () => {
   const [filterItems, setFilterItems] = useState([]);
   const [csvFile, setCsvFile] = useState<File | null>(null);
   const [isModalActive, setIsModalActive] = useState(false);
@@ -39,7 +39,7 @@ const Dishes_orderedTablesPage = () => {
   ]);
 
   const hasCreatePermission =
-    currentUser && hasPermission(currentUser, 'CREATE_DISHES_ORDERED');
+    currentUser && hasPermission(currentUser, 'CREATE_DISHES_ORDER');
 
   const addFilter = () => {
     const newItem = {
@@ -55,9 +55,9 @@ const Dishes_orderedTablesPage = () => {
     setFilterItems([...filterItems, newItem]);
   };
 
-  const getDishes_orderedCSV = async () => {
+  const getDishes_orderCSV = async () => {
     const response = await axios({
-      url: '/dishes_ordered?filetype=csv',
+      url: '/dishes_order?filetype=csv',
       method: 'GET',
       responseType: 'blob',
     });
@@ -65,7 +65,7 @@ const Dishes_orderedTablesPage = () => {
     const blob = new Blob([response.data], { type: type });
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
-    link.download = 'dishes_orderedCSV.csv';
+    link.download = 'dishes_orderCSV.csv';
     link.click();
   };
 
@@ -85,12 +85,12 @@ const Dishes_orderedTablesPage = () => {
   return (
     <>
       <Head>
-        <title>{getPageTitle('Dishes_ordered')}</title>
+        <title>{getPageTitle('Dishes_order')}</title>
       </Head>
       <SectionMain>
         <SectionTitleLineWithButton
           icon={mdiChartTimelineVariant}
-          title='Dishes_ordered'
+          title='Dishes_order'
           main
         >
           {''}
@@ -99,7 +99,7 @@ const Dishes_orderedTablesPage = () => {
           {hasCreatePermission && (
             <BaseButton
               className={'mr-3'}
-              href={'/dishes_ordered/dishes_ordered-new'}
+              href={'/dishes_order/dishes_order-new'}
               color='info'
               label='New Item'
             />
@@ -115,7 +115,7 @@ const Dishes_orderedTablesPage = () => {
             className={'mr-3'}
             color='info'
             label='Download CSV'
-            onClick={getDishes_orderedCSV}
+            onClick={getDishes_orderCSV}
           />
 
           {hasCreatePermission && (
@@ -129,13 +129,13 @@ const Dishes_orderedTablesPage = () => {
           <div className='md:inline-flex items-center ms-auto'>
             <div id='delete-rows-button'></div>
 
-            <Link href={'/dishes_ordered/dishes_ordered-list'}>
+            <Link href={'/dishes_order/dishes_order-list'}>
               Back to <span className='capitalize'>list</span>
             </Link>
           </div>
         </CardBox>
         <CardBox className='mb-6' hasTable>
-          <TableDishes_ordered
+          <TableDishes_order
             filterItems={filterItems}
             setFilterItems={setFilterItems}
             filters={filters}
@@ -162,12 +162,12 @@ const Dishes_orderedTablesPage = () => {
   );
 };
 
-Dishes_orderedTablesPage.getLayout = function getLayout(page: ReactElement) {
+Dishes_orderTablesPage.getLayout = function getLayout(page: ReactElement) {
   return (
-    <LayoutAuthenticated permission={'READ_DISHES_ORDERED'}>
+    <LayoutAuthenticated permission={'READ_DISHES_ORDER'}>
       {page}
     </LayoutAuthenticated>
   );
 };
 
-export default Dishes_orderedTablesPage;
+export default Dishes_orderTablesPage;

@@ -1,12 +1,11 @@
-import {
-  mdiAccount,
-  mdiChartTimelineVariant,
-  mdiMail,
-  mdiUpload,
-} from '@mdi/js';
+import { mdiChartTimelineVariant, mdiUpload } from '@mdi/js';
 import Head from 'next/head';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.min.css';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import dayjs from 'dayjs';
+
 import CardBox from '../../components/CardBox';
 import LayoutAuthenticated from '../../layouts/Authenticated';
 import SectionMain from '../../components/SectionMain';
@@ -22,76 +21,75 @@ import FormCheckRadio from '../../components/FormCheckRadio';
 import FormCheckRadioGroup from '../../components/FormCheckRadioGroup';
 import FormFilePicker from '../../components/FormFilePicker';
 import FormImagePicker from '../../components/FormImagePicker';
-import { SwitchField } from '../../components/SwitchField';
-
 import { SelectField } from '../../components/SelectField';
 import { SelectFieldMany } from '../../components/SelectFieldMany';
+import { SwitchField } from '../../components/SwitchField';
 import { RichTextField } from '../../components/RichTextField';
 
-import { create } from '../../stores/dishes_ordered/dishes_orderedSlice';
-import { useAppDispatch } from '../../stores/hooks';
+import { update, fetch } from '../../stores/invalid_table/invalid_tableSlice';
+import { useAppDispatch, useAppSelector } from '../../stores/hooks';
 import { useRouter } from 'next/router';
-import moment from 'moment';
+import { saveFile } from '../../helpers/fileSaver';
+import dataFormatter from '../../helpers/dataFormatter';
+import ImageField from '../../components/ImageField';
 
-const initialValues = {
-  order: '',
-
-  dish: '',
-
-  quantity: '',
-};
-
-const Dishes_orderedNew = () => {
+const EditInvalid_table = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const initVals = {};
+  const [initialValues, setInitialValues] = useState(initVals);
+
+  const { invalid_table } = useAppSelector((state) => state.invalid_table);
+
+  const { invalid_tableId } = router.query;
+
+  useEffect(() => {
+    dispatch(fetch({ id: invalid_tableId }));
+  }, [invalid_tableId]);
+
+  useEffect(() => {
+    if (typeof invalid_table === 'object') {
+      setInitialValues(invalid_table);
+    }
+  }, [invalid_table]);
+
+  useEffect(() => {
+    if (typeof invalid_table === 'object') {
+      const newInitialVal = { ...initVals };
+
+      Object.keys(initVals).forEach(
+        (el) => (newInitialVal[el] = invalid_table[el] || ''),
+      );
+
+      setInitialValues(newInitialVal);
+    }
+  }, [invalid_table]);
 
   const handleSubmit = async (data) => {
-    await dispatch(create(data));
-    await router.push('/dishes_ordered/dishes_ordered-list');
+    await dispatch(update({ id: invalid_tableId, data }));
+    await router.push('/invalid_table/invalid_table-list');
   };
+
   return (
     <>
       <Head>
-        <title>{getPageTitle('New Item')}</title>
+        <title>{getPageTitle('Edit invalid_table')}</title>
       </Head>
       <SectionMain>
         <SectionTitleLineWithButton
           icon={mdiChartTimelineVariant}
-          title='New Item'
+          title={'Edit invalid_table'}
           main
         >
           {''}
         </SectionTitleLineWithButton>
         <CardBox>
           <Formik
+            enableReinitialize
             initialValues={initialValues}
             onSubmit={(values) => handleSubmit(values)}
           >
             <Form>
-              <FormField label='Order' labelFor='order'>
-                <Field
-                  name='order'
-                  id='order'
-                  component={SelectField}
-                  options={[]}
-                  itemRef={'orders'}
-                ></Field>
-              </FormField>
-
-              <FormField label='Dish' labelFor='dish'>
-                <Field
-                  name='dish'
-                  id='dish'
-                  component={SelectField}
-                  options={[]}
-                  itemRef={'dishes'}
-                ></Field>
-              </FormField>
-
-              <FormField label='Quantity'>
-                <Field type='number' name='quantity' placeholder='Quantity' />
-              </FormField>
-
               <BaseDivider />
               <BaseButtons>
                 <BaseButton type='submit' color='info' label='Submit' />
@@ -102,7 +100,7 @@ const Dishes_orderedNew = () => {
                   outline
                   label='Cancel'
                   onClick={() =>
-                    router.push('/dishes_ordered/dishes_ordered-list')
+                    router.push('/invalid_table/invalid_table-list')
                   }
                 />
               </BaseButtons>
@@ -114,12 +112,12 @@ const Dishes_orderedNew = () => {
   );
 };
 
-Dishes_orderedNew.getLayout = function getLayout(page: ReactElement) {
+EditInvalid_table.getLayout = function getLayout(page: ReactElement) {
   return (
-    <LayoutAuthenticated permission={'CREATE_DISHES_ORDERED'}>
+    <LayoutAuthenticated permission={'UPDATE_INVALID_TABLE'}>
       {page}
     </LayoutAuthenticated>
   );
 };
 
-export default Dishes_orderedNew;
+export default EditInvalid_table;

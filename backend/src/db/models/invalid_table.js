@@ -5,28 +5,13 @@ const bcrypt = require('bcrypt');
 const moment = require('moment');
 
 module.exports = function (sequelize, DataTypes) {
-  const dishes = sequelize.define(
-    'dishes',
+  const invalid_table = sequelize.define(
+    'invalid_table',
     {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
-      },
-
-      name: {
-        type: DataTypes.TEXT,
-      },
-
-      cutlery: {
-        type: DataTypes.BOOLEAN,
-
-        allowNull: false,
-        defaultValue: false,
-      },
-
-      price: {
-        type: DataTypes.DECIMAL,
       },
 
       importHash: {
@@ -42,35 +27,19 @@ module.exports = function (sequelize, DataTypes) {
     },
   );
 
-  dishes.associate = (db) => {
+  invalid_table.associate = (db) => {
     /// loop through entities and it's fields, and if ref === current e[name] and create relation has many on parent entity
-
-    db.dishes.hasMany(db.dish_ingredients, {
-      as: 'dish_ingredients_dish',
-      foreignKey: {
-        name: 'dishId',
-      },
-      constraints: false,
-    });
-
-    db.dishes.hasMany(db.dishes_order, {
-      as: 'dishes_order_dish',
-      foreignKey: {
-        name: 'dishId',
-      },
-      constraints: false,
-    });
 
     //end loop
 
-    db.dishes.belongsTo(db.users, {
+    db.invalid_table.belongsTo(db.users, {
       as: 'createdBy',
     });
 
-    db.dishes.belongsTo(db.users, {
+    db.invalid_table.belongsTo(db.users, {
       as: 'updatedBy',
     });
   };
 
-  return dishes;
+  return invalid_table;
 };

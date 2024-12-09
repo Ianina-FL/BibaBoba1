@@ -37,7 +37,7 @@ export const loadColumns = async (
     }
   }
 
-  const hasUpdatePermission = hasPermission(user, 'UPDATE_DISHES_ORDERED');
+  const hasUpdatePermission = hasPermission(user, 'UPDATE_DISHES_ORDER');
 
   return [
     {
@@ -107,8 +107,8 @@ export const loadColumns = async (
             onView={onView}
             onEdit={onEdit}
             itemId={params?.row?.id}
-            pathEdit={`/dishes_ordered/dishes_ordered-edit/?id=${params?.row?.id}`}
-            pathView={`/dishes_ordered/dishes_ordered-view/?id=${params?.row?.id}`}
+            pathEdit={`/dishes_order/dishes_order-edit/?id=${params?.row?.id}`}
+            pathView={`/dishes_order/dishes_order-view/?id=${params?.row?.id}`}
             key={1}
             hasUpdatePermission={hasUpdatePermission}
           />,

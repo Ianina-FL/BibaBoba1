@@ -107,7 +107,7 @@ const DishesView = () => {
           </>
 
           <>
-            <p className={'block font-bold mb-2'}>Dishes_ordered Dish</p>
+            <p className={'block font-bold mb-2'}>Dishes_order Dish</p>
             <CardBox
               className='mb-6 border border-gray-300 rounded overflow-hidden'
               hasTable
@@ -120,14 +120,14 @@ const DishesView = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {dishes.dishes_ordered_dish &&
-                      Array.isArray(dishes.dishes_ordered_dish) &&
-                      dishes.dishes_ordered_dish.map((item: any) => (
+                    {dishes.dishes_order_dish &&
+                      Array.isArray(dishes.dishes_order_dish) &&
+                      dishes.dishes_order_dish.map((item: any) => (
                         <tr
                           key={item.id}
                           onClick={() =>
                             router.push(
-                              `/dishes_ordered/dishes_ordered-view/?id=${item.id}`,
+                              `/dishes_order/dishes_order-view/?id=${item.id}`,
                             )
                           }
                         >
@@ -137,7 +137,7 @@ const DishesView = () => {
                   </tbody>
                 </table>
               </div>
-              {!dishes?.dishes_ordered_dish?.length && (
+              {!dishes?.dishes_order_dish?.length && (
                 <div className={'text-center py-4'}>No data</div>
               )}
             </CardBox>

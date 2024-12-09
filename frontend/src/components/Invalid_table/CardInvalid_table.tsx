@@ -10,7 +10,7 @@ import LoadingSpinner from '../LoadingSpinner';
 import { hasPermission } from '../../helpers/userPermissions';
 
 type Props = {
-  dishes_ordered: any[];
+  invalid_table: any[];
   loading: boolean;
   onDelete: (id: string) => void;
   onView: (id: string) => void;
@@ -21,7 +21,7 @@ type Props = {
 };
 
 const CardUsers = ({
-  dishes_ordered,
+  invalid_table,
   loading,
   onEdit,
   onView,
@@ -41,7 +41,7 @@ const CardUsers = ({
   const currentUser = useAppSelector((state) => state.auth.currentUser);
   const hasUpdatePermission = hasPermission(
     currentUser,
-    'UPDATE_DISHES_ORDERED',
+    'UPDATE_INVALID_TABLE',
   );
 
   return (
@@ -52,7 +52,7 @@ const CardUsers = ({
         className='grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 2xl:grid-cols-4 xl:gap-x-8'
       >
         {!loading &&
-          dishes_ordered.map((item, index) => (
+          invalid_table.map((item, index) => (
             <li
               key={item.id}
               className={`overflow-hidden ${
@@ -68,7 +68,7 @@ const CardUsers = ({
                   className='text-lg font-bold leading-6 line-clamp-1'
                   onClick={() => onView(item.id)}
                 >
-                  {item.order}
+                  {item.id}
                 </button>
 
                 <div className='ml-auto '>
@@ -77,45 +77,16 @@ const CardUsers = ({
                     onView={onView}
                     onEdit={onEdit}
                     itemId={item.id}
-                    pathEdit={`/dishes_ordered/dishes_ordered-edit/?id=${item.id}`}
-                    pathView={`/dishes_ordered/dishes_ordered-view/?id=${item.id}`}
+                    pathEdit={`/invalid_table/invalid_table-edit/?id=${item.id}`}
+                    pathView={`/invalid_table/invalid_table-view/?id=${item.id}`}
                     hasUpdatePermission={hasUpdatePermission}
                   />
                 </div>
               </div>
-              <dl className='divide-y  divide-gray-600   dark:divide-dark-700 px-6 py-4 text-sm leading-6 h-64 overflow-y-auto'>
-                <div className='flex justify-between gap-x-4 py-3'>
-                  <dt className='  text-gray-500  dark:text-dark-600'>Order</dt>
-                  <dd className='flex items-start gap-x-2'>
-                    <div className='font-medium line-clamp-4'>
-                      {dataFormatter.ordersOneListFormatter(item.order)}
-                    </div>
-                  </dd>
-                </div>
-
-                <div className='flex justify-between gap-x-4 py-3'>
-                  <dt className='  text-gray-500  dark:text-dark-600'>Dish</dt>
-                  <dd className='flex items-start gap-x-2'>
-                    <div className='font-medium line-clamp-4'>
-                      {dataFormatter.dishesOneListFormatter(item.dish)}
-                    </div>
-                  </dd>
-                </div>
-
-                <div className='flex justify-between gap-x-4 py-3'>
-                  <dt className='  text-gray-500  dark:text-dark-600'>
-                    Quantity
-                  </dt>
-                  <dd className='flex items-start gap-x-2'>
-                    <div className='font-medium line-clamp-4'>
-                      {item.quantity}
-                    </div>
-                  </dd>
-                </div>
-              </dl>
+              <dl className='divide-y  divide-gray-600   dark:divide-dark-700 px-6 py-4 text-sm leading-6 h-64 overflow-y-auto'></dl>
             </li>
           ))}
-        {!loading && dishes_ordered.length === 0 && (
+        {!loading && invalid_table.length === 0 && (
           <div className='col-span-full flex items-center justify-center h-40'>
             <p className=''>No data to display</p>
           </div>
