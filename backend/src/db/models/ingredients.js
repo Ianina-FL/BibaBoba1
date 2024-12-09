@@ -35,25 +35,9 @@ module.exports = function (sequelize, DataTypes) {
     /// loop through entities and it's fields, and if ref === current e[name] and create relation has many on parent entity
 
     db.ingredients.hasMany(db.dish_ingredients, {
-      as: 'dish_ingredients_ingredient_1',
+      as: 'dish_ingredients_ingredient',
       foreignKey: {
-        name: 'ingredient_1Id',
-      },
-      constraints: false,
-    });
-
-    db.ingredients.hasMany(db.dish_ingredients, {
-      as: 'dish_ingredients_ingredient_2',
-      foreignKey: {
-        name: 'ingredient_2Id',
-      },
-      constraints: false,
-    });
-
-    db.ingredients.hasMany(db.dish_ingredients, {
-      as: 'dish_ingredients_ingredient_3',
-      foreignKey: {
-        name: 'ingredient_3Id',
+        name: 'ingredientId',
       },
       constraints: false,
     });

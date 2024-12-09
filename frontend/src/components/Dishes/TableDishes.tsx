@@ -21,7 +21,7 @@ import _ from 'lodash';
 import dataFormatter from '../../helpers/dataFormatter';
 import { dataGridStyles } from '../../styles';
 
-import CardDishes from './CardDishes';
+import ListDishes from './ListDishes';
 
 const perPage = 10;
 
@@ -425,7 +425,7 @@ const TableSampleDishes = ({
       </CardBoxModal>
 
       {dishes && Array.isArray(dishes) && !showGrid && (
-        <CardDishes
+        <ListDishes
           dishes={dishes}
           loading={loading}
           onView={handleViewAction}

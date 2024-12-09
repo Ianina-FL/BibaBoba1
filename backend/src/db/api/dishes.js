@@ -133,6 +133,10 @@ module.exports = class DishesDBApi {
 
     const output = dishes.get({ plain: true });
 
+    output.dish_ingredients_dish = await dishes.getDish_ingredients_dish({
+      transaction,
+    });
+
     output.dishes_ordered_dish = await dishes.getDishes_ordered_dish({
       transaction,
     });

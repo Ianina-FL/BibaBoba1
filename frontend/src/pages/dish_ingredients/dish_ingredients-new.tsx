@@ -34,15 +34,11 @@ import { useRouter } from 'next/router';
 import moment from 'moment';
 
 const initialValues = {
-  ingredient_1: '',
+  dish: '',
+
+  ingredient: '',
 
   quantity: '',
-
-  ingredient_2: '',
-
-  ingredient_3: '',
-
-  dish: [],
 };
 
 const Dish_ingredientsNew = () => {
@@ -72,10 +68,20 @@ const Dish_ingredientsNew = () => {
             onSubmit={(values) => handleSubmit(values)}
           >
             <Form>
-              <FormField label='Ingredient 1' labelFor='ingredient_1'>
+              <FormField label='Dish' labelFor='dish'>
                 <Field
-                  name='ingredient_1'
-                  id='ingredient_1'
+                  name='dish'
+                  id='dish'
+                  component={SelectField}
+                  options={[]}
+                  itemRef={'dishes'}
+                ></Field>
+              </FormField>
+
+              <FormField label='Ingredient' labelFor='ingredient'>
+                <Field
+                  name='ingredient'
+                  id='ingredient'
                   component={SelectField}
                   options={[]}
                   itemRef={'ingredients'}
@@ -84,36 +90,6 @@ const Dish_ingredientsNew = () => {
 
               <FormField label='Quantity'>
                 <Field type='number' name='quantity' placeholder='Quantity' />
-              </FormField>
-
-              <FormField label='Ingredient 2' labelFor='ingredient_2'>
-                <Field
-                  name='ingredient_2'
-                  id='ingredient_2'
-                  component={SelectField}
-                  options={[]}
-                  itemRef={'ingredients'}
-                ></Field>
-              </FormField>
-
-              <FormField label='Ingredient 3' labelFor='ingredient_3'>
-                <Field
-                  name='ingredient_3'
-                  id='ingredient_3'
-                  component={SelectField}
-                  options={[]}
-                  itemRef={'ingredients'}
-                ></Field>
-              </FormField>
-
-              <FormField label='Dish' labelFor='dish'>
-                <Field
-                  name='dish'
-                  id='dish'
-                  itemRef={'ingredients'}
-                  options={[]}
-                  component={SelectFieldMany}
-                ></Field>
               </FormField>
 
               <BaseDivider />

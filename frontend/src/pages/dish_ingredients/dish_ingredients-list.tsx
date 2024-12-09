@@ -34,9 +34,8 @@ const Dish_ingredientsTablesPage = () => {
   const [filters] = useState([
     { label: 'Quantity', title: 'quantity', number: 'true' },
 
-    { label: 'Ingredient 1', title: 'ingredient_1' },
-    { label: 'Ingredient 2', title: 'ingredient_2' },
-    { label: 'Ingredient 3', title: 'ingredient_3' },
+    { label: 'Dish', title: 'dish' },
+    { label: 'Ingredient', title: 'ingredient' },
   ]);
 
   const hasCreatePermission =

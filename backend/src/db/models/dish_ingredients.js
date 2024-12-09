@@ -15,7 +15,7 @@ module.exports = function (sequelize, DataTypes) {
       },
 
       quantity: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.INTEGER,
       },
 
       importHash: {
@@ -32,39 +32,22 @@ module.exports = function (sequelize, DataTypes) {
   );
 
   dish_ingredients.associate = (db) => {
-    db.dish_ingredients.belongsToMany(db.ingredients, {
-      as: 'dish',
-      foreignKey: {
-        name: 'dish_ingredients_dishId',
-      },
-      constraints: false,
-      through: 'dish_ingredientsDishIngredients',
-    });
-
     /// loop through entities and it's fields, and if ref === current e[name] and create relation has many on parent entity
 
     //end loop
 
-    db.dish_ingredients.belongsTo(db.ingredients, {
-      as: 'ingredient_1',
+    db.dish_ingredients.belongsTo(db.dishes, {
+      as: 'dish',
       foreignKey: {
-        name: 'ingredient_1Id',
+        name: 'dishId',
       },
       constraints: false,
     });
 
     db.dish_ingredients.belongsTo(db.ingredients, {
-      as: 'ingredient_2',
+      as: 'ingredient',
       foreignKey: {
-        name: 'ingredient_2Id',
-      },
-      constraints: false,
-    });
-
-    db.dish_ingredients.belongsTo(db.ingredients, {
-      as: 'ingredient_3',
-      foreignKey: {
-        name: 'ingredient_3Id',
+        name: 'ingredientId',
       },
       constraints: false,
     });

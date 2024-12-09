@@ -54,64 +54,21 @@ const Dish_ingredientsView = () => {
         </SectionTitleLineWithButton>
         <CardBox>
           <div className={'mb-4'}>
-            <p className={'block font-bold mb-2'}>Ingredient 1</p>
+            <p className={'block font-bold mb-2'}>Dish</p>
 
-            <p>{dish_ingredients?.ingredient_1?.name ?? 'No data'}</p>
+            <p>{dish_ingredients?.dish?.name ?? 'No data'}</p>
+          </div>
+
+          <div className={'mb-4'}>
+            <p className={'block font-bold mb-2'}>Ingredient</p>
+
+            <p>{dish_ingredients?.ingredient?.name ?? 'No data'}</p>
           </div>
 
           <div className={'mb-4'}>
             <p className={'block font-bold mb-2'}>Quantity</p>
             <p>{dish_ingredients?.quantity || 'No data'}</p>
           </div>
-
-          <div className={'mb-4'}>
-            <p className={'block font-bold mb-2'}>Ingredient 2</p>
-
-            <p>{dish_ingredients?.ingredient_2?.name ?? 'No data'}</p>
-          </div>
-
-          <div className={'mb-4'}>
-            <p className={'block font-bold mb-2'}>Ingredient 3</p>
-
-            <p>{dish_ingredients?.ingredient_3?.name ?? 'No data'}</p>
-          </div>
-
-          <>
-            <p className={'block font-bold mb-2'}>Dish</p>
-            <CardBox
-              className='mb-6 border border-gray-300 rounded overflow-hidden'
-              hasTable
-            >
-              <div className='overflow-x-auto'>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {dish_ingredients.dish &&
-                      Array.isArray(dish_ingredients.dish) &&
-                      dish_ingredients.dish.map((item: any) => (
-                        <tr
-                          key={item.id}
-                          onClick={() =>
-                            router.push(
-                              `/ingredients/ingredients-view/?id=${item.id}`,
-                            )
-                          }
-                        >
-                          <td data-label='name'>{item.name}</td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              </div>
-              {!dish_ingredients?.dish?.length && (
-                <div className={'text-center py-4'}>No data</div>
-              )}
-            </CardBox>
-          </>
 
           <BaseDivider />
 

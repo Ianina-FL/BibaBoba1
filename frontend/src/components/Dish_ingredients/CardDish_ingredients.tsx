@@ -68,7 +68,7 @@ const CardUsers = ({
                   className='text-lg font-bold leading-6 line-clamp-1'
                   onClick={() => onView(item.id)}
                 >
-                  {item.id}
+                  {item.dish}
                 </button>
 
                 <div className='ml-auto '>
@@ -85,13 +85,22 @@ const CardUsers = ({
               </div>
               <dl className='divide-y  divide-gray-600   dark:divide-dark-700 px-6 py-4 text-sm leading-6 h-64 overflow-y-auto'>
                 <div className='flex justify-between gap-x-4 py-3'>
+                  <dt className='  text-gray-500  dark:text-dark-600'>Dish</dt>
+                  <dd className='flex items-start gap-x-2'>
+                    <div className='font-medium line-clamp-4'>
+                      {dataFormatter.dishesOneListFormatter(item.dish)}
+                    </div>
+                  </dd>
+                </div>
+
+                <div className='flex justify-between gap-x-4 py-3'>
                   <dt className='  text-gray-500  dark:text-dark-600'>
-                    Ingredient 1
+                    Ingredient
                   </dt>
                   <dd className='flex items-start gap-x-2'>
                     <div className='font-medium line-clamp-4'>
                       {dataFormatter.ingredientsOneListFormatter(
-                        item.ingredient_1,
+                        item.ingredient,
                       )}
                     </div>
                   </dd>
@@ -104,43 +113,6 @@ const CardUsers = ({
                   <dd className='flex items-start gap-x-2'>
                     <div className='font-medium line-clamp-4'>
                       {item.quantity}
-                    </div>
-                  </dd>
-                </div>
-
-                <div className='flex justify-between gap-x-4 py-3'>
-                  <dt className='  text-gray-500  dark:text-dark-600'>
-                    Ingredient 2
-                  </dt>
-                  <dd className='flex items-start gap-x-2'>
-                    <div className='font-medium line-clamp-4'>
-                      {dataFormatter.ingredientsOneListFormatter(
-                        item.ingredient_2,
-                      )}
-                    </div>
-                  </dd>
-                </div>
-
-                <div className='flex justify-between gap-x-4 py-3'>
-                  <dt className='  text-gray-500  dark:text-dark-600'>
-                    Ingredient 3
-                  </dt>
-                  <dd className='flex items-start gap-x-2'>
-                    <div className='font-medium line-clamp-4'>
-                      {dataFormatter.ingredientsOneListFormatter(
-                        item.ingredient_3,
-                      )}
-                    </div>
-                  </dd>
-                </div>
-
-                <div className='flex justify-between gap-x-4 py-3'>
-                  <dt className='  text-gray-500  dark:text-dark-600'>Dish</dt>
-                  <dd className='flex items-start gap-x-2'>
-                    <div className='font-medium line-clamp-4'>
-                      {dataFormatter
-                        .ingredientsManyListFormatter(item.dish)
-                        .join(', ')}
                     </div>
                   </dd>
                 </div>

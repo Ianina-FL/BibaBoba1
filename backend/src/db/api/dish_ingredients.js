@@ -23,19 +23,11 @@ module.exports = class Dish_ingredientsDBApi {
       { transaction },
     );
 
-    await dish_ingredients.setIngredient_1(data.ingredient_1 || null, {
+    await dish_ingredients.setDish(data.dish || null, {
       transaction,
     });
 
-    await dish_ingredients.setIngredient_2(data.ingredient_2 || null, {
-      transaction,
-    });
-
-    await dish_ingredients.setIngredient_3(data.ingredient_3 || null, {
-      transaction,
-    });
-
-    await dish_ingredients.setDish(data.dish || [], {
+    await dish_ingredients.setIngredient(data.ingredient || null, {
       transaction,
     });
 
@@ -86,19 +78,11 @@ module.exports = class Dish_ingredientsDBApi {
       { transaction },
     );
 
-    await dish_ingredients.setIngredient_1(data.ingredient_1 || null, {
+    await dish_ingredients.setDish(data.dish || null, {
       transaction,
     });
 
-    await dish_ingredients.setIngredient_2(data.ingredient_2 || null, {
-      transaction,
-    });
-
-    await dish_ingredients.setIngredient_3(data.ingredient_3 || null, {
-      transaction,
-    });
-
-    await dish_ingredients.setDish(data.dish || [], {
+    await dish_ingredients.setIngredient(data.ingredient || null, {
       transaction,
     });
 
@@ -166,19 +150,11 @@ module.exports = class Dish_ingredientsDBApi {
 
     const output = dish_ingredients.get({ plain: true });
 
-    output.ingredient_1 = await dish_ingredients.getIngredient_1({
-      transaction,
-    });
-
-    output.ingredient_2 = await dish_ingredients.getIngredient_2({
-      transaction,
-    });
-
-    output.ingredient_3 = await dish_ingredients.getIngredient_3({
-      transaction,
-    });
-
     output.dish = await dish_ingredients.getDish({
+      transaction,
+    });
+
+    output.ingredient = await dish_ingredients.getIngredient({
       transaction,
     });
 
@@ -198,33 +174,13 @@ module.exports = class Dish_ingredientsDBApi {
     let where = {};
     let include = [
       {
-        model: db.ingredients,
-        as: 'ingredient_1',
-      },
-
-      {
-        model: db.ingredients,
-        as: 'ingredient_2',
-      },
-
-      {
-        model: db.ingredients,
-        as: 'ingredient_3',
-      },
-
-      {
-        model: db.ingredients,
+        model: db.dishes,
         as: 'dish',
-        through: filter.dish
-          ? {
-              where: {
-                [Op.or]: filter.dish.split('|').map((item) => {
-                  return { ['Id']: Utils.uuid(item) };
-                }),
-              },
-            }
-          : null,
-        required: filter.dish ? true : null,
+      },
+
+      {
+        model: db.ingredients,
+        as: 'ingredient',
       },
     ];
 
@@ -272,36 +228,25 @@ module.exports = class Dish_ingredientsDBApi {
         };
       }
 
-      if (filter.ingredient_1) {
-        const listItems = filter.ingredient_1.split('|').map((item) => {
+      if (filter.dish) {
+        const listItems = filter.dish.split('|').map((item) => {
           return Utils.uuid(item);
         });
 
         where = {
           ...where,
-          ingredient_1Id: { [Op.or]: listItems },
+          dishId: { [Op.or]: listItems },
         };
       }
 
-      if (filter.ingredient_2) {
-        const listItems = filter.ingredient_2.split('|').map((item) => {
+      if (filter.ingredient) {
+        const listItems = filter.ingredient.split('|').map((item) => {
           return Utils.uuid(item);
         });
 
         where = {
           ...where,
-          ingredient_2Id: { [Op.or]: listItems },
-        };
-      }
-
-      if (filter.ingredient_3) {
-        const listItems = filter.ingredient_3.split('|').map((item) => {
-          return Utils.uuid(item);
-        });
-
-        where = {
-          ...where,
-          ingredient_3Id: { [Op.or]: listItems },
+          ingredientId: { [Op.or]: listItems },
         };
       }
 
@@ -374,21 +319,21 @@ module.exports = class Dish_ingredientsDBApi {
       where = {
         [Op.or]: [
           { ['id']: Utils.uuid(query) },
-          Utils.ilike('dish_ingredients', 'id', query),
+          Utils.ilike('dish_ingredients', 'dish', query),
         ],
       };
     }
 
     const records = await db.dish_ingredients.findAll({
-      attributes: ['id', 'id'],
+      attributes: ['id', 'dish'],
       where,
       limit: limit ? Number(limit) : undefined,
-      orderBy: [['id', 'ASC']],
+      orderBy: [['dish', 'ASC']],
     });
 
     return records.map((record) => ({
       id: record.id,
-      label: record.id,
+      label: record.dish,
     }));
   }
 };

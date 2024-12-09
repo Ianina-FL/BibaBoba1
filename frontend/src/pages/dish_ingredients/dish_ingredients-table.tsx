@@ -34,9 +34,8 @@ const Dish_ingredientsTablesPage = () => {
   const [filters] = useState([
     { label: 'Quantity', title: 'quantity', number: 'true' },
 
-    { label: 'Ingredient 1', title: 'ingredient_1' },
-    { label: 'Ingredient 2', title: 'ingredient_2' },
-    { label: 'Ingredient 3', title: 'ingredient_3' },
+    { label: 'Dish', title: 'dish' },
+    { label: 'Ingredient', title: 'ingredient' },
   ]);
 
   const hasCreatePermission =
@@ -131,7 +130,7 @@ const Dish_ingredientsTablesPage = () => {
             <div id='delete-rows-button'></div>
 
             <Link href={'/dish_ingredients/dish_ingredients-list'}>
-              Back to <span className='capitalize'>card</span>
+              Back to <span className='capitalize'>list</span>
             </Link>
           </div>
         </CardBox>

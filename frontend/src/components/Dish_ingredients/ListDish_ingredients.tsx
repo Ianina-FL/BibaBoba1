@@ -64,10 +64,17 @@ const ListDish_ingredients = ({
                   onClick={() => onView(item.id)}
                 >
                   <div className={'flex-1 px-3'}>
-                    <p className={'text-xs   text-gray-500 '}>Ingredient 1</p>
+                    <p className={'text-xs   text-gray-500 '}>Dish</p>
+                    <p className={'line-clamp-2'}>
+                      {dataFormatter.dishesOneListFormatter(item.dish)}
+                    </p>
+                  </div>
+
+                  <div className={'flex-1 px-3'}>
+                    <p className={'text-xs   text-gray-500 '}>Ingredient</p>
                     <p className={'line-clamp-2'}>
                       {dataFormatter.ingredientsOneListFormatter(
-                        item.ingredient_1,
+                        item.ingredient,
                       )}
                     </p>
                   </div>
@@ -75,33 +82,6 @@ const ListDish_ingredients = ({
                   <div className={'flex-1 px-3'}>
                     <p className={'text-xs   text-gray-500 '}>Quantity</p>
                     <p className={'line-clamp-2'}>{item.quantity}</p>
-                  </div>
-
-                  <div className={'flex-1 px-3'}>
-                    <p className={'text-xs   text-gray-500 '}>Ingredient 2</p>
-                    <p className={'line-clamp-2'}>
-                      {dataFormatter.ingredientsOneListFormatter(
-                        item.ingredient_2,
-                      )}
-                    </p>
-                  </div>
-
-                  <div className={'flex-1 px-3'}>
-                    <p className={'text-xs   text-gray-500 '}>Ingredient 3</p>
-                    <p className={'line-clamp-2'}>
-                      {dataFormatter.ingredientsOneListFormatter(
-                        item.ingredient_3,
-                      )}
-                    </p>
-                  </div>
-
-                  <div className={'flex-1 px-3'}>
-                    <p className={'text-xs   text-gray-500 '}>Dish</p>
-                    <p className={'line-clamp-2'}>
-                      {dataFormatter
-                        .ingredientsManyListFormatter(item.dish)
-                        .join(', ')}
-                    </p>
                   </div>
                 </div>
                 <ListActionsPopover

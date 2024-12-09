@@ -21,7 +21,7 @@ import _ from 'lodash';
 import dataFormatter from '../../helpers/dataFormatter';
 import { dataGridStyles } from '../../styles';
 
-import CardDish_ingredients from './CardDish_ingredients';
+import ListDish_ingredients from './ListDish_ingredients';
 
 const perPage = 10;
 
@@ -428,7 +428,7 @@ const TableSampleDish_ingredients = ({
       </CardBoxModal>
 
       {dish_ingredients && Array.isArray(dish_ingredients) && !showGrid && (
-        <CardDish_ingredients
+        <ListDish_ingredients
           dish_ingredients={dish_ingredients}
           loading={loading}
           onView={handleViewAction}

@@ -70,6 +70,43 @@ const DishesView = () => {
           </div>
 
           <>
+            <p className={'block font-bold mb-2'}>Dish_ingredients Dish</p>
+            <CardBox
+              className='mb-6 border border-gray-300 rounded overflow-hidden'
+              hasTable
+            >
+              <div className='overflow-x-auto'>
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {dishes.dish_ingredients_dish &&
+                      Array.isArray(dishes.dish_ingredients_dish) &&
+                      dishes.dish_ingredients_dish.map((item: any) => (
+                        <tr
+                          key={item.id}
+                          onClick={() =>
+                            router.push(
+                              `/dish_ingredients/dish_ingredients-view/?id=${item.id}`,
+                            )
+                          }
+                        >
+                          <td data-label='quantity'>{item.quantity}</td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              </div>
+              {!dishes?.dish_ingredients_dish?.length && (
+                <div className={'text-center py-4'}>No data</div>
+              )}
+            </CardBox>
+          </>
+
+          <>
             <p className={'block font-bold mb-2'}>Dishes_ordered Dish</p>
             <CardBox
               className='mb-6 border border-gray-300 rounded overflow-hidden'
