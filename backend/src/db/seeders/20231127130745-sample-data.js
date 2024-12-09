@@ -65,6 +65,18 @@ const ClientAddressesData = [
 
     flat_number: '4D',
   },
+
+  {
+    // type code here for "relation_one" field
+
+    street: 'Park Ave',
+
+    house_number: '202',
+
+    code: '10005',
+
+    flat_number: '5E',
+  },
 ];
 
 const ClientsData = [
@@ -90,6 +102,12 @@ const ClientsData = [
     name: 'Michael Brown',
 
     phone: '5552345678',
+  },
+
+  {
+    name: 'Sarah Davis',
+
+    phone: '5558765432',
   },
 ];
 
@@ -141,6 +159,18 @@ const DishIngredientsData = [
 
     // type code here for "relation_many" field
   },
+
+  {
+    // type code here for "relation_one" field
+
+    quantity: 4,
+
+    // type code here for "relation_one" field
+
+    // type code here for "relation_one" field
+
+    // type code here for "relation_many" field
+  },
 ];
 
 const DishesData = [
@@ -174,6 +204,14 @@ const DishesData = [
     cutlery: true,
 
     price: 9.99,
+  },
+
+  {
+    name: 'Draniki',
+
+    cutlery: true,
+
+    price: 6.49,
   },
 ];
 
@@ -209,6 +247,14 @@ const DishesOrderedData = [
 
     quantity: 1,
   },
+
+  {
+    // type code here for "relation_one" field
+
+    // type code here for "relation_one" field
+
+    quantity: 2,
+  },
 ];
 
 const IngredientsData = [
@@ -227,6 +273,10 @@ const IngredientsData = [
   {
     name: 'Bacon',
   },
+
+  {
+    name: 'Potatoes',
+  },
 ];
 
 const OrdersData = [
@@ -243,7 +293,7 @@ const OrdersData = [
 
     order_rejected: new Date(),
 
-    repeated: true,
+    repeated: false,
   },
 
   {
@@ -275,7 +325,7 @@ const OrdersData = [
 
     order_rejected: new Date(),
 
-    repeated: false,
+    repeated: true,
   },
 
   {
@@ -292,6 +342,22 @@ const OrdersData = [
     order_rejected: new Date(),
 
     repeated: true,
+  },
+
+  {
+    // type code here for "relation_one" field
+
+    // type code here for "relation_one" field
+
+    order_received: new Date('2023-10-05T20:00:00Z'),
+
+    order_ready: new Date('2023-10-05T21:00:00Z'),
+
+    order_delivered: new Date('2023-10-05T22:00:00Z'),
+
+    order_rejected: new Date(),
+
+    repeated: false,
   },
 ];
 
@@ -310,6 +376,10 @@ const SourcesData = [
 
   {
     source_name: 'Walk-in',
+  },
+
+  {
+    source_name: 'Email',
   },
 ];
 
@@ -359,6 +429,17 @@ async function associateClientAddressWithClient() {
   if (ClientAddress3?.setClient) {
     await ClientAddress3.setClient(relatedClient3);
   }
+
+  const relatedClient4 = await Clients.findOne({
+    offset: Math.floor(Math.random() * (await Clients.count())),
+  });
+  const ClientAddress4 = await ClientAddresses.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (ClientAddress4?.setClient) {
+    await ClientAddress4.setClient(relatedClient4);
+  }
 }
 
 async function associateDishIngredientWithIngredient_1() {
@@ -404,6 +485,17 @@ async function associateDishIngredientWithIngredient_1() {
   });
   if (DishIngredient3?.setIngredient_1) {
     await DishIngredient3.setIngredient_1(relatedIngredient_13);
+  }
+
+  const relatedIngredient_14 = await Ingredients.findOne({
+    offset: Math.floor(Math.random() * (await Ingredients.count())),
+  });
+  const DishIngredient4 = await DishIngredients.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (DishIngredient4?.setIngredient_1) {
+    await DishIngredient4.setIngredient_1(relatedIngredient_14);
   }
 }
 
@@ -451,6 +543,17 @@ async function associateDishIngredientWithIngredient_2() {
   if (DishIngredient3?.setIngredient_2) {
     await DishIngredient3.setIngredient_2(relatedIngredient_23);
   }
+
+  const relatedIngredient_24 = await Ingredients.findOne({
+    offset: Math.floor(Math.random() * (await Ingredients.count())),
+  });
+  const DishIngredient4 = await DishIngredients.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (DishIngredient4?.setIngredient_2) {
+    await DishIngredient4.setIngredient_2(relatedIngredient_24);
+  }
 }
 
 async function associateDishIngredientWithIngredient_3() {
@@ -496,6 +599,17 @@ async function associateDishIngredientWithIngredient_3() {
   });
   if (DishIngredient3?.setIngredient_3) {
     await DishIngredient3.setIngredient_3(relatedIngredient_33);
+  }
+
+  const relatedIngredient_34 = await Ingredients.findOne({
+    offset: Math.floor(Math.random() * (await Ingredients.count())),
+  });
+  const DishIngredient4 = await DishIngredients.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (DishIngredient4?.setIngredient_3) {
+    await DishIngredient4.setIngredient_3(relatedIngredient_34);
   }
 }
 
@@ -545,6 +659,17 @@ async function associateDishesOrderedWithOrder() {
   if (DishesOrdered3?.setOrder) {
     await DishesOrdered3.setOrder(relatedOrder3);
   }
+
+  const relatedOrder4 = await Orders.findOne({
+    offset: Math.floor(Math.random() * (await Orders.count())),
+  });
+  const DishesOrdered4 = await DishesOrdered.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (DishesOrdered4?.setOrder) {
+    await DishesOrdered4.setOrder(relatedOrder4);
+  }
 }
 
 async function associateDishesOrderedWithDish() {
@@ -590,6 +715,17 @@ async function associateDishesOrderedWithDish() {
   });
   if (DishesOrdered3?.setDish) {
     await DishesOrdered3.setDish(relatedDish3);
+  }
+
+  const relatedDish4 = await Dishes.findOne({
+    offset: Math.floor(Math.random() * (await Dishes.count())),
+  });
+  const DishesOrdered4 = await DishesOrdered.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (DishesOrdered4?.setDish) {
+    await DishesOrdered4.setDish(relatedDish4);
   }
 }
 
@@ -637,6 +773,17 @@ async function associateOrderWithClient() {
   if (Order3?.setClient) {
     await Order3.setClient(relatedClient3);
   }
+
+  const relatedClient4 = await Clients.findOne({
+    offset: Math.floor(Math.random() * (await Clients.count())),
+  });
+  const Order4 = await Orders.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (Order4?.setClient) {
+    await Order4.setClient(relatedClient4);
+  }
 }
 
 async function associateOrderWithSource() {
@@ -682,6 +829,17 @@ async function associateOrderWithSource() {
   });
   if (Order3?.setSource) {
     await Order3.setSource(relatedSource3);
+  }
+
+  const relatedSource4 = await Sources.findOne({
+    offset: Math.floor(Math.random() * (await Sources.count())),
+  });
+  const Order4 = await Orders.findOne({
+    order: [['id', 'ASC']],
+    offset: 4,
+  });
+  if (Order4?.setSource) {
+    await Order4.setSource(relatedSource4);
   }
 }
 
